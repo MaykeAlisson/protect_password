@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_home_op1"
-        android:title="Op1"
+        android:id="@+id/menu_home_baseDados"
+        android:title="Base de Dados"
         android:orderInCategory="100"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/menu_home_op2"
-        android:title="Op2"
+        android:id="@+id/menu_home_reset"
+        android:title="Resetar Arquivo"
         android:orderInCategory="200"
         />
 </menu>

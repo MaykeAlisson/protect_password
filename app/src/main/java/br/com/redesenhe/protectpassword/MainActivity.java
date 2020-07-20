@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activty_main_toolbar);
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 
@@ -34,15 +35,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.menu_home_op1:
-                Toast.makeText(MainActivity.this, "Menu 1", Toast.LENGTH_LONG).show();
+            case R.id.menu_home_baseDados:
+                Toast.makeText(MainActivity.this, "Menu Local Base", Toast.LENGTH_LONG).show();
                 break;
 
-            case R.id.menu_home_op2:
-                Toast.makeText(MainActivity.this, "Menu 2", Toast.LENGTH_LONG).show();
+            case R.id.menu_home_reset:
+                Toast.makeText(MainActivity.this, "Menu Resetar", Toast.LENGTH_LONG).show();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void entrar(View view){
+        Toast.makeText(MainActivity.this, "BTN Entrar", Toast.LENGTH_LONG).show();
     }
 }
