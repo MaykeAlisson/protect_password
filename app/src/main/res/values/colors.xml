@@ -2,5 +2,7 @@
 <resources>
     <color name="colorPrimary">#363636</color>
     <color name="colorPrimaryDark">#1C1C1C</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#1C1C1C</color>
+    <color name="fundoApp">#808080</color>
+    <color name="branco">#ffff</color>
 </resources>

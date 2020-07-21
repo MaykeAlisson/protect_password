@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
@@ -45,5 +46,19 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void criarGrupo(View view){
+        openDialog();
+        Toast.makeText(HomeActivity.this, "BTN Criar Grupo", Toast.LENGTH_LONG).show();
+    }
+
+    public void criarRegistro(View view){
+        Toast.makeText(HomeActivity.this, "BTN Criar Registro", Toast.LENGTH_LONG).show();
+    }
+
+    private void openDialog(){
+        CustomDialog customDialog = new CustomDialog();
+        customDialog.show(getSupportFragmentManager(), "Adicionar Grupo");
     }
 }
