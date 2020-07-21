@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.menu_home_baseDados:
+            case R.id.menu_main_baseDados:
                 Toast.makeText(MainActivity.this, "Menu Local Base", Toast.LENGTH_LONG).show();
                 break;
 
-            case R.id.menu_home_reset:
+            case R.id.menu_main_reset:
                 Toast.makeText(MainActivity.this, "Menu Resetar", Toast.LENGTH_LONG).show();
                 break;
         }
