@@ -21,6 +21,7 @@
         android:onClick="criarGrupo"
         android:text="Adicionar Grupo"
         android:textColor="@color/branco"
+        android:background="#45484B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,6 +34,7 @@
         android:onClick="criarRegistro"
         android:text="Adicionar Entrada"
         android:textColor="@color/branco"
+        android:background="#45484B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
