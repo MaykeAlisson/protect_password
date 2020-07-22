@@ -18,10 +18,10 @@
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="criarGrupo"
+        android:background="#45484B"
+        android:onClick="openDialog"
         android:text="Adicionar Grupo"
         android:textColor="@color/branco"
-        android:background="#45484B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

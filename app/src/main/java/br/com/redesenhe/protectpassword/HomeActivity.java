@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements CustomDialog.CustomDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +48,29 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void criarGrupo(View view){
-        openDialog();
-        Toast.makeText(HomeActivity.this, "BTN Criar Grupo", Toast.LENGTH_LONG).show();
+    public void openDialog(View view){
+        CustomDialog customDialog = new CustomDialog();
+        customDialog.show(getSupportFragmentManager(), "Adicionar Grupo");
+    }
+
+    @Override
+    public void applyText(String nomeGrupo) {
+        criarGrupo(nomeGrupo);
+    }
+
+    private void criarGrupo(final String possivelNomeGrupo){
+        if (possivelNomeGrupo.trim().isEmpty()) {
+            Toast.makeText(HomeActivity.this, "Nome Invalido!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Toast.makeText(HomeActivity.this, "Cria o grupo!", Toast.LENGTH_LONG).show();
     }
 
     public void criarRegistro(View view){
         Toast.makeText(HomeActivity.this, "BTN Criar Registro", Toast.LENGTH_LONG).show();
     }
 
-    private void openDialog(){
-        CustomDialog customDialog = new CustomDialog();
-        customDialog.show(getSupportFragmentManager(), "Adicionar Grupo");
-    }
+
+
 }
