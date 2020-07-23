@@ -21,9 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.activty_main_toolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
 
+        init();
+    }
+
+    private void init() {
+
+        // Verifica se arquivo ja existe;
+        // se existe abre, le e salva em um map
+        // se nao existe cria o arquivo e cria
     }
 
     @Override
@@ -49,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void entrar(View view){
+
+        // se o arquivo existe e foi criado o map compara a senha de acesso;
+        // se o arquivo e novo salva a senha no map e grava no arquivo
+        // se senha correta ou gravada no map libera proxima tela
+
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
         finish();
