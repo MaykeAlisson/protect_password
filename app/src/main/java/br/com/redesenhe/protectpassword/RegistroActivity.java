@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.View;
 
 public class RegistroActivity extends AppCompatActivity {
 
@@ -15,5 +16,10 @@ public class RegistroActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activty_registro_toolbar);
         setTitle("Novo Registro");
         setSupportActionBar(toolbar);
+    }
+
+    public void openDialog(View view){
+        CustomDialogConfiguracaoSenha customDialogConfiguracaoSenha = new CustomDialogConfiguracaoSenha();
+        customDialogConfiguracaoSenha.show(getSupportFragmentManager(), "Gerar Senha");
     }
 }

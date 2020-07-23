@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity implements CustomDialog.CustomDialogListener {
+public class HomeActivity extends AppCompatActivity implements CustomDialogNovoGrupo.CustomDialogListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class HomeActivity extends AppCompatActivity implements CustomDialog.Cust
     }
 
     public void openDialog(View view){
-        CustomDialog customDialog = new CustomDialog();
-        customDialog.show(getSupportFragmentManager(), "Adicionar Grupo");
+        CustomDialogNovoGrupo customDialogNovoGrupo = new CustomDialogNovoGrupo();
+        customDialogNovoGrupo.show(getSupportFragmentManager(), "Adicionar Grupo");
     }
 
     @Override

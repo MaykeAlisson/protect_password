@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class CustomDialog extends AppCompatDialogFragment {
+public class CustomDialogNovoGrupo extends AppCompatDialogFragment {
     private EditText editTextNomeGrupo;
     private CustomDialogListener listener;
 
@@ -51,7 +51,7 @@ public class CustomDialog extends AppCompatDialogFragment {
             listener = (CustomDialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() +
-                    "must implement ExampleDialogListener");
+                    "Tem que implementar CustomDialogNovoGrupo");
         }
 
     }
