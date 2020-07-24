@@ -17,15 +17,20 @@ public class UtilSystem {
         return pathDados.exists() && fileDadosGerada.exists();
     }
 
-    public void criaArquivo() throws IOException {
+    public File criaArquivo() throws IOException {
 
         if (!pathDados.exists()) {
-            pathDados.mkdirs();
+            boolean mkdirs = pathDados.mkdirs();
         }
 
         if (!fileDadosGerada.exists()) {
-            fileDadosGerada.createNewFile();
+            boolean newFile = fileDadosGerada.createNewFile();
+            if (newFile) return fileDadosGerada;
         }
+
+        return null;
     }
+
+    public void gravaNoArquivo(File arquivo){}
 
 }

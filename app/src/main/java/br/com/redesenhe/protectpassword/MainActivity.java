@@ -22,9 +22,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.system.Constantes;
 import br.com.redesenhe.protectpassword.system.UtilSystem;
 
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
     private final int PERMISSAO_REQUEST = 1;
     final UtilSystem utilSystem = new UtilSystem();
+
+    final String path = Environment.getExternalStorageDirectory() + SYSTEM_FOLDER;
+    final File pathDados = new File(path);
+    File fileDadosGerada = new File(pathDados, "protectpassword.txt");
 
 
     Map<String, Object> mapDados = new HashMap<>();
@@ -54,45 +61,55 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
 
         solicitaPermisao();
+        // teste
+        Registro registro = new Registro.Builder()
+                .comId("teste_id")
+                .comNome("Registro")
+                .comUsuario("Mayke")
+                .comUrl("")
+                .comSenha("123456")
+                .comComentario("")
+                .build();
 
-        mapDados = getMapDados();
+        mapDados.put(registro.getNome(), registro);
+
+        // Verifica se arquivo ja existe;
+        // se existe abre, le e salva em um map
+        // se nao existe cria o arquivo e cria
+
+        if (!pathDados.exists()) {
+            pathDados.mkdirs();
+        }
 
         try {
-
-//            File pathDados = new File(path);
-//            if (!pathDados.exists()){
-//                pathDados.mkdirs();
-//            }
-
-//            File fileDadosGerada = new File(pathDados, "protectpassword.txt");
-
             if (!fileDadosGerada.exists()) {
                 fileDadosGerada.createNewFile();
             }
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileDadosGerada));
 
-        } catch (IOException e) {
+        }catch (IOException e){
             Log.i(LOG_PROTECT, String.format("init: " + e.getMessage()));
+            e.printStackTrace();
         }
 
-//        try {
-//            fileDadosGerada.w
-//            outputStream = new FileOutputStream (fileDadosGerada);
-//            outputStream.write("string".getBytes());
-//            outputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
-        // Verifica se arquivo ja existe;
-        // se existe abre, le e salva em um map
-        // se nao existe cria o arquivo e cria
+
+
+
     }
 
     private Map<String, Object> getMapDados() {
 
-        if (!utilSystem.arquivoExiste()) utilSystem.criaArquivo();
+        if (!utilSystem.arquivoExiste()){
+            try {
+                utilSystem.criaArquivo();
+            }catch (IOException e){
+                Log.i(LOG_PROTECT, String.format("init: " + e.getMessage()));
+                e.printStackTrace();
+            }
+
+        }
 
 
     }
