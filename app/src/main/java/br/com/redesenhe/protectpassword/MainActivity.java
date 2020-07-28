@@ -1,37 +1,27 @@
 package br.com.redesenhe.protectpassword;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import br.com.redesenhe.protectpassword.model.Registro;
-import br.com.redesenhe.protectpassword.system.Constantes;
 import br.com.redesenhe.protectpassword.system.UtilSystem;
 
-import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
 import static br.com.redesenhe.protectpassword.system.Constantes.SYSTEM_FOLDER;
 
 
@@ -41,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     final UtilSystem utilSystem = new UtilSystem();
 
     final String path = Environment.getExternalStorageDirectory() + SYSTEM_FOLDER;
-    final File pathDados = new File(path);
-    File fileDadosGerada = new File(pathDados, "protectpassword.txt");
 
 
     Map<String, Object> mapDados = new HashMap<>();
@@ -60,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
-        solicitaPermisao();
+        // verifica se banco de dados existe se sim busca a senha
+        // se nao cria banco
+
+
+//        solicitaPermisao();
         // teste
         Registro registro = new Registro.Builder()
                 .comId("teste_id")
@@ -71,49 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 .comComentario("")
                 .build();
 
-        mapDados.put(registro.getNome(), registro);
-
-        // Verifica se arquivo ja existe;
-        // se existe abre, le e salva em um map
-        // se nao existe cria o arquivo e cria
-
-        if (!pathDados.exists()) {
-            pathDados.mkdirs();
-        }
-
-        try {
-            if (!fileDadosGerada.exists()) {
-                fileDadosGerada.createNewFile();
-            }
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileDadosGerada));
-
-        }catch (IOException e){
-            Log.i(LOG_PROTECT, String.format("init: " + e.getMessage()));
-            e.printStackTrace();
-        }
-
-
-
-
+//        mapDados.put(registro.getNome(), registro);
 
     }
-
-    private Map<String, Object> getMapDados() {
-
-        if (!utilSystem.arquivoExiste()){
-            try {
-                utilSystem.criaArquivo();
-            }catch (IOException e){
-                Log.i(LOG_PROTECT, String.format("init: " + e.getMessage()));
-                e.printStackTrace();
-            }
-
-        }
-
-
-    }
-
 
     private void solicitaPermisao() {
         //USUARIA DAR A PERMISSAO PARA LER
