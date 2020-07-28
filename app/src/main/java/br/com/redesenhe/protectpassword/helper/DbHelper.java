@@ -48,21 +48,34 @@ public class DbHelper extends SQLiteOpenHelper {
                                      " %s TEXT NOT NULL); ",
                                      TABELA_USUARIO, USUARIO_COLUMN_ID, USUARIO_COLUMN_SENHA, USUARIO_COLUMN_DEVICE, USUARIO_COLUMN_CRIACAO);
 
-        String SQL_USUARIO = "CREATE TABLE Periodo(codPeriodo INTEGER PRIMARY KEY AUTOINCREMENT, nomePeriodo TEXT)";
+        String SQL_GRUPO = format(  "CREATE TABLE IF NOT EXISTS %s " +
+                                    "( %s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                    " %s TEXT NOT NULL, " +
+                                    " %s TEXT NOT NULL); ",
+                                    TABELA_GRUPO, GRUPO_COLUMN_ID, GRUPO_COLUMN_NOME, GRUPO_COLUMN_CRIACAO);
 
-        String SQL_DISCIPLINA = "CREATE TABLE Disciplina(codDiscip INTEGER PRIMARY KEY AUTOINCREMENT, nomeDiscip TEXT, " +
-                "periodoDiscip INTEGER, piDiscip INTEGER, FOREIGN KEY(periodoDiscip) REFERENCES Periodo(codPeriodo))";
-
-        String SQL_USUARIO = "CREATE TABLE IF NOT EXISTS " + TABELA_USUARIO
-                             + " ( INTEGER PRIMARY KEY AUTOINCREMENT, "
-                             + " nome TEXT NOT NULL ); ";
-
+        String SQL_REGISTRO = format( "CREATE TABLE IF NOT EXISTS %s " +
+                                      "( %s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                      " %s TEXT NOT NULL, " +
+                                      " %s TEXT , " +
+                                      " %s TEXT , " +
+                                      " %s TEXT NOT NULL, " +
+                                      " %s TEXT , " +
+                                      " %s INTEGER ," +
+                                      " %s TEXT NOT NULL " +
+                                      "FOREIGN KEY(%s) REFERENCES %s(%s)); ",
+                                      TABELA_REGISTRO, REGISTRO_COLUMN_ID, REGISTRO_COLUMN_NOME,
+                                      REGISTRO_COLUMN_USUARIO, REGISTRO_COLUMN_URL, REGISTRO_COLUMN_SENHA,
+                                      REGISTRO_COLUMN_COMENTARIO, REGISTRO_COLUMN_ID_GRUPO, REGISTRO_COLUMN_CRIACAO,
+                                      REGISTRO_COLUMN_ID_GRUPO, TABELA_GRUPO, GRUPO_COLUMN_ID);
 
         try {
-            db.execSQL(sql);
-            Log.i("INFO DB", "Sucesso ao criar a tabela");
+            db.execSQL(SQL_USUARIO);
+            db.execSQL(SQL_GRUPO);
+            db.execSQL(SQL_REGISTRO);
+            Log.i("INFO DB", "Sucesso ao criar a tabelas");
         } catch (Exception e) {
-            Log.i("INFO DB", "Erro ao criar a tabela" + e.getMessage());
+            Log.i("INFO DB", "Erro ao criar a tabelas" + e.getMessage());
         }
 
 
@@ -71,10 +84,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        String sql = "DROP TABLE IF EXISTS " + TABELA_TAREFAS + " ;";
-
+//        String sql = "DROP TABLE IF EXISTS " + TABELA_REGISTRO;
         try {
-            db.execSQL(sql);
+//            db.execSQL(sql);
             onCreate(db);
             Log.i("INFO DB", "Sucesso ao atualizar App");
         } catch (Exception e) {
