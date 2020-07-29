@@ -6,16 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import static java.util.Objects.requireNonNull;
-
 public class Registro implements Serializable {
 
-    private String id;
+    private Long id;
     private String nome;
     private String usuario;
     private String url;
     private String senha;
     private String comentario;
+    private Long idGrupo;
     private LocalDateTime dataCriacao;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,20 +26,22 @@ public class Registro implements Serializable {
     @JsonCreator
     @Deprecated
     public Registro(
-            @JsonProperty("id") final String id,
+            @JsonProperty("id") final Long id,
             @JsonProperty("nome") final String nome,
             @JsonProperty("usuario") final String usuario,
             @JsonProperty("url") final String url,
             @JsonProperty("senha") final String senha,
             @JsonProperty("comentario") final String comentario,
+            @JsonProperty("idGrupo") final Long idGrupo,
             @JsonProperty("dataCriacao") final LocalDateTime dataCriacao
     ) {
-        this.id = requireNonNull(id, "Id não pode ser nulo");
+        this.id = id;
         this.nome = nome;
         this.usuario = usuario;
         this.url = url;
         this.senha = senha;
         this.comentario = comentario;
+        this.idGrupo = idGrupo;
         this.dataCriacao = dataCriacao;
     }
 
@@ -51,6 +52,7 @@ public class Registro implements Serializable {
         this.url = builder.url;
         this.senha = builder.senha;
         this.comentario = builder.comentario;
+        this.idGrupo = builder.idGrupo;
         this.dataCriacao = builder.dataCriacao;
     }
 
@@ -61,7 +63,7 @@ public class Registro implements Serializable {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @JsonProperty("id")
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -90,6 +92,11 @@ public class Registro implements Serializable {
         return comentario;
     }
 
+    @JsonProperty("idGrupo")
+    public Long getIdGrupo() {
+        return idGrupo;
+    }
+
     @JsonProperty("dataCriacao")
     public LocalDateTime getDataCriacao() {
         return dataCriacao;
@@ -103,17 +110,19 @@ public class Registro implements Serializable {
 
     public static class Builder {
 
-        private String id;
+        private Long id;
         private String nome;
         private String usuario;
         private String url;
         private String senha;
         private String comentario;
+        private Long idGrupo;
         private LocalDateTime dataCriacao;
 
-        public Builder() {}
+        public Builder() {
+        }
 
-        public Builder comId(final String value) {
+        public Builder comId(final Long value) {
             this.id = value;
             return this;
         }
@@ -140,6 +149,11 @@ public class Registro implements Serializable {
 
         public Builder comComentario(final String value) {
             this.comentario = value;
+            return this;
+        }
+
+        public Builder comIdGrupo(final Long value) {
+            this.idGrupo = value;
             return this;
         }
 
