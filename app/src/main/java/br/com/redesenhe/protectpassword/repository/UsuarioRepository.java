@@ -25,9 +25,9 @@ public class UsuarioRepository implements IUsuarioRepository{
     public boolean salvar(Usuario usuario) {
 
         ContentValues cv = new ContentValues();
-        cv.put(DbHelper.USUARIO_COLUMN_DEVICE, usuario.getDevice );
-        cv.put(DbHelper.USUARIO_COLUMN_SENHA, usuario.getSenha );
-        cv.put(DbHelper.USUARIO_COLUMN_CRIACAO, usuario.getCriacao );
+        cv.put(DbHelper.USUARIO_COLUMN_DEVICE, usuario.getDevice() );
+        cv.put(DbHelper.USUARIO_COLUMN_SENHA, usuario.getSenha() );
+        cv.put(DbHelper.USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao().toString() );
 
         try {
             set.insert(DbHelper.TABELA_USUARIO, null, cv );
@@ -48,6 +48,7 @@ public class UsuarioRepository implements IUsuarioRepository{
 
         try {
             String[] args = {tarefa.getId().toString()};
+            get.
             escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
             Log.i(LOG_PROTECT, "Tarefa atualizada com sucesso!");
         }catch (Exception e){
