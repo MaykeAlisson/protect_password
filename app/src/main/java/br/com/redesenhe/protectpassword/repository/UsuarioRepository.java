@@ -13,6 +13,7 @@ import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
 
 import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static java.lang.String.format;
 
 public class UsuarioRepository implements IUsuarioRepository{
 
@@ -45,22 +46,27 @@ public class UsuarioRepository implements IUsuarioRepository{
     }
 
     @Override
-    public Usuario buscar(Usuario usuario) {
+    public Usuario buscarTodos() {
 
-        ContentValues cv = new ContentValues();
-        cv.put("nome", tarefa.getNomeTarefa() );
+        String sql = format( "SELECT * FROM %s", DbHelper.TABELA_USUARIO);
 
-        try {
-            String[] args = {tarefa.getId().toString()};
-            get.
-            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
-            Log.i(LOG_PROTECT, "Tarefa atualizada com sucesso!");
-        }catch (Exception e){
-            Log.e(LOG_PROTECT, "Erro ao atualizada tarefa " + e.getMessage() );
-            return false;
+        Cursor c = get.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+
+            Tarefa tarefa = new Tarefa();
+
+            Long id = c.getLong( c.getColumnIndex("id") );
+            String nomeTarefa = c.getString( c.getColumnIndex("nome") );
+
+            tarefa.setId( id );
+            tarefa.setNomeTarefa( nomeTarefa );
+
+            tarefas.add( tarefa );
+            Log.i("tarefaDao", tarefa.getNomeTarefa() );
         }
 
-        return true;
+        return tarefas;
     }
 
     @Override
