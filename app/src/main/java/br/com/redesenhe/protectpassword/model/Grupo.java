@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Grupo implements Serializable {
 
     private Long id;
     private String nome;
-    private LocalDateTime dataCriacao;
+    private Date dataCriacao;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -23,7 +24,7 @@ public class Grupo implements Serializable {
     public Grupo(
             @JsonProperty("id") final Long id,
             @JsonProperty("nome") final String nome,
-            @JsonProperty("dataCriacao") final LocalDateTime dataCriacao
+            @JsonProperty("dataCriacao") final Date dataCriacao
     ) {
         this.id = id;
         this.nome = nome;
@@ -53,7 +54,7 @@ public class Grupo implements Serializable {
     }
 
     @JsonProperty("dataCriacao")
-    public LocalDateTime getDataCriacao() {
+    public Date getDataCriacao() {
         return dataCriacao;
     }
 
@@ -67,7 +68,7 @@ public class Grupo implements Serializable {
 
         private Long id;
         private String nome;
-        private LocalDateTime dataCriacao;
+        private Date dataCriacao;
 
         public Builder() {
         }
@@ -82,7 +83,7 @@ public class Grupo implements Serializable {
             return this;
         }
 
-        public Builder comDataCriacao(final LocalDateTime value) {
+        public Builder comDataCriacao(final Date value) {
             this.dataCriacao = value;
             return this;
         }

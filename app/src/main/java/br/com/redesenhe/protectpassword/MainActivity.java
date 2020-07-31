@@ -3,11 +3,13 @@ package br.com.redesenhe.protectpassword;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,14 +18,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
-import br.com.redesenhe.protectpassword.model.Registro;
+import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
-import br.com.redesenhe.protectpassword.system.UtilSystem;
-
-import static br.com.redesenhe.protectpassword.system.Constantes.SYSTEM_FOLDER;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,25 +31,39 @@ public class MainActivity extends AppCompatActivity {
     // Repository
     UsuarioRepository usuarioRepository;
 
+    private boolean existeUsuario;
+    Usuario usuario;
+
+    // Campos
+    private EditText inputSenha;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.activty_main_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
 
         // Repository
         usuarioRepository = new UsuarioRepository(getApplicationContext());
+
+        inputSenha = findViewById(R.id.activity_main_textSenha);
 
         init();
     }
 
     private void init() {
 
+
         // verifica se banco de dados existe se sim busca a senha
         // se nao cria banco
 
+        existeUsuario = usuarioRepository.existeUsuario();
+
+        if (existeUsuario) {
+            usuario = usuarioRepository.buscar();
+        }
 //        solicitaPermisao();
 
     }
@@ -106,19 +118,43 @@ public class MainActivity extends AppCompatActivity {
         // se o arquivo e novo salva a senha no map e grava no arquivo
         // se senha correta ou gravada no map libera proxima tela
 
-        boolean existeUsuario = usuarioRepository.existeUsuario();
-
-        if (!existeUsuario) {
-            Toast.makeText(MainActivity.this, "NAO EXISTE USUARIO", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(inputSenha.getText())) {
+            inputSenha.setError("Senha obrigatoria!");
             return;
         }
 
-        Toast.makeText(MainActivity.this, "EXISTE USUARIO", Toast.LENGTH_LONG).show();
+        String senhaDigitada = inputSenha.getText().toString();
 
+        if (!existeUsuario) {
 
+            String modelo = Build.MODEL;
+            Date data = new Date();
 
-//        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-//        startActivity(intent);
-//        finish();
+            usuario = new Usuario.Builder()
+                    .comDevice(modelo)
+                    .comSenha(senhaDigitada)
+                    .comDataCriacao(data)
+                    .build();
+
+            if (usuarioRepository.salvar(usuario)) {
+                Toast.makeText(MainActivity.this, "USUARIO SALVO", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Toast.makeText(MainActivity.this, "ERRO AO SALVAR USUARIO", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String senha = usuario.getSenha();
+
+        if (senha.equals(senhaDigitada)) {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        Toast.makeText(MainActivity.this, "SENHA INVALIDA PARA USER: " + usuario.getDevice() , Toast.LENGTH_LONG).show();
+
     }
 }

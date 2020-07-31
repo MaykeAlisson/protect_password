@@ -74,9 +74,9 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(SQL_USUARIO);
             db.execSQL(SQL_GRUPO);
             db.execSQL(SQL_REGISTRO);
-            Log.i(LOG_PROTECT, "Sucesso ao criar a tabelas");
+            Log.d(LOG_PROTECT, "Sucesso ao criar a tabelas");
         } catch (Exception e) {
-            Log.i(LOG_PROTECT, "Erro ao criar a tabelas" + e.getMessage());
+            Log.d(LOG_PROTECT, "Erro ao criar a tabelas" + e.getMessage());
         }
 
 
@@ -89,9 +89,9 @@ public class DbHelper extends SQLiteOpenHelper {
         try {
 //            db.execSQL(sql);
             onCreate(db);
-            Log.i("INFO DB", "Sucesso ao atualizar App");
+            Log.d(LOG_PROTECT, "Sucesso ao atualizar App");
         } catch (Exception e) {
-            Log.i("INFO DB", "Erro ao atualizar App" + e.getMessage());
+            Log.d(LOG_PROTECT, "Erro ao atualizar App" + e.getMessage());
         }
 
     }

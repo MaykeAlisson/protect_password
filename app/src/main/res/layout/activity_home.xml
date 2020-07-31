@@ -39,9 +39,11 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_home_listView"
         android:layout_width="409dp"
         android:layout_height="599dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_home_btnAdicionarGrupo"
         app:layout_constraintEnd_toEndOf="parent"
