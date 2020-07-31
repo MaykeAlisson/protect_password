@@ -8,16 +8,19 @@ import android.util.Log;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
+import br.com.redesenhe.protectpassword.util.UtilDate;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_SENHA;
 import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.UtilDate.convertStringData;
 import static java.lang.String.format;
 
 public class UsuarioRepository implements IUsuarioRepository{
@@ -76,7 +79,7 @@ public class UsuarioRepository implements IUsuarioRepository{
             Long id = c.getLong( c.getColumnIndex(USUARIO_COLUMN_ID) );
             String device = c.getString( c.getColumnIndex(USUARIO_COLUMN_DEVICE) );
             String senha = c.getString( c.getColumnIndex(USUARIO_COLUMN_SENHA) );
-            LocalDateTime dataCriacao = LocalDateTime.parse(c.getString( c.getColumnIndex(USUARIO_COLUMN_CRIACAO) ));
+            Date dataCriacao = convertStringData(c.getString(c.getColumnIndex(USUARIO_COLUMN_CRIACAO)));
 
             Usuario usuarioBuilder = new Usuario.Builder()
                     .comId(id)
