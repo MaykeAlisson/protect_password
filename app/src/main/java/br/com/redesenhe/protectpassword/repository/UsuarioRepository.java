@@ -6,12 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
 
+import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CRIACAO;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_ID;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_SENHA;
 import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
 import static java.lang.String.format;
 
@@ -27,12 +32,24 @@ public class UsuarioRepository implements IUsuarioRepository{
     }
 
     @Override
+    public boolean existeUsuario(){
+
+        String sql = format( "SELECT * FROM %s ", DbHelper.TABELA_USUARIO);
+
+        Cursor c = get.rawQuery(sql, null);
+        c.moveToFirst();
+
+        return c != null;
+
+    }
+
+    @Override
     public boolean salvar(Usuario usuario) {
 
         ContentValues cv = new ContentValues();
-        cv.put(DbHelper.USUARIO_COLUMN_DEVICE, usuario.getDevice() );
-        cv.put(DbHelper.USUARIO_COLUMN_SENHA, usuario.getSenha() );
-        cv.put(DbHelper.USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao().toString() );
+        cv.put(USUARIO_COLUMN_DEVICE, usuario.getDevice() );
+        cv.put(USUARIO_COLUMN_SENHA, usuario.getSenha() );
+        cv.put(USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao().toString() );
 
         try {
             set.insert(DbHelper.TABELA_USUARIO, null, cv );
@@ -46,86 +63,95 @@ public class UsuarioRepository implements IUsuarioRepository{
     }
 
     @Override
-    public Usuario buscarTodos() {
+    public Usuario buscar() {
 
-        String sql = format( "SELECT * FROM %s", DbHelper.TABELA_USUARIO);
+        String sql = format( "SELECT * FROM %s LIMIT 1", DbHelper.TABELA_USUARIO);
 
         Cursor c = get.rawQuery(sql, null);
 
-        while ( c.moveToNext() ){
-
-            Tarefa tarefa = new Tarefa();
-
-            Long id = c.getLong( c.getColumnIndex("id") );
-            String nomeTarefa = c.getString( c.getColumnIndex("nome") );
-
-            tarefa.setId( id );
-            tarefa.setNomeTarefa( nomeTarefa );
-
-            tarefas.add( tarefa );
-            Log.i("tarefaDao", tarefa.getNomeTarefa() );
-        }
-
-        return tarefas;
-    }
-
-    @Override
-    public boolean atualizar(Usuario usuario) {
-
-        ContentValues cv = new ContentValues();
-        cv.put("nome", tarefa.getNomeTarefa() );
-
-        try {
-            String[] args = {tarefa.getId().toString()};
-            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
-            Log.i(LOG_PROTECT, "Tarefa atualizada com sucesso!");
-        }catch (Exception e){
-            Log.e(LOG_PROTECT, "Erro ao atualizada tarefa " + e.getMessage() );
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean deletar(Tarefa tarefa) {
-
-        try {
-            String[] args = { tarefa.getId().toString() };
-            escreve.delete(DbHelper.TABELA_TAREFAS, "id=?", args );
-            Log.i("INFO", "Tarefa removida com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao remover tarefa " + e.getMessage() );
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public List<Tarefa> listar() {
-
-        List<Tarefa> tarefas = new ArrayList<>();
-
-        String sql = "SELECT * FROM " + DbHelper.TABELA_TAREFAS + " ;";
-        Cursor c = le.rawQuery(sql, null);
+        Usuario usuario = null;
 
         while ( c.moveToNext() ){
 
-            Tarefa tarefa = new Tarefa();
+            Long id = c.getLong( c.getColumnIndex(USUARIO_COLUMN_ID) );
+            String device = c.getString( c.getColumnIndex(USUARIO_COLUMN_DEVICE) );
+            String senha = c.getString( c.getColumnIndex(USUARIO_COLUMN_SENHA) );
+            LocalDateTime dataCriacao = LocalDateTime.parse(c.getString( c.getColumnIndex(USUARIO_COLUMN_CRIACAO) ));
 
-            Long id = c.getLong( c.getColumnIndex("id") );
-            String nomeTarefa = c.getString( c.getColumnIndex("nome") );
+            Usuario usuarioBuilder = new Usuario.Builder()
+                    .comId(id)
+                    .comDevice(device)
+                    .comSenha(senha)
+                    .comDataCriacao(dataCriacao)
+                    .build();
 
-            tarefa.setId( id );
-            tarefa.setNomeTarefa( nomeTarefa );
+            usuario = usuarioBuilder;
 
-            tarefas.add( tarefa );
-            Log.i("tarefaDao", tarefa.getNomeTarefa() );
+            Log.i(LOG_PROTECT, usuarioBuilder.getDevice() );
         }
 
-        return tarefas;
+        c.close();
 
+        return usuario;
     }
+
+//    @Override
+//    public boolean atualizar(Usuario usuario) {
+//
+//        ContentValues cv = new ContentValues();
+//        cv.put("nome", tarefa.getNomeTarefa() );
+//
+//        try {
+//            String[] args = {tarefa.getId().toString()};
+//            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
+//            Log.i(LOG_PROTECT, "Tarefa atualizada com sucesso!");
+//        }catch (Exception e){
+//            Log.e(LOG_PROTECT, "Erro ao atualizada tarefa " + e.getMessage() );
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+//    @Override
+//    public boolean deletar(Tarefa tarefa) {
+//
+//        try {
+//            String[] args = { tarefa.getId().toString() };
+//            escreve.delete(DbHelper.TABELA_TAREFAS, "id=?", args );
+//            Log.i("INFO", "Tarefa removida com sucesso!");
+//        }catch (Exception e){
+//            Log.e("INFO", "Erro ao remover tarefa " + e.getMessage() );
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+//    @Override
+//    public List<Tarefa> listar() {
+//
+//        List<Tarefa> tarefas = new ArrayList<>();
+//
+//        String sql = "SELECT * FROM " + DbHelper.TABELA_TAREFAS + " ;";
+//        Cursor c = le.rawQuery(sql, null);
+//
+//        while ( c.moveToNext() ){
+//
+//            Tarefa tarefa = new Tarefa();
+//
+//            Long id = c.getLong( c.getColumnIndex("id") );
+//            String nomeTarefa = c.getString( c.getColumnIndex("nome") );
+//
+//            tarefa.setId( id );
+//            tarefa.setNomeTarefa( nomeTarefa );
+//
+//            tarefas.add( tarefa );
+//            Log.i("tarefaDao", tarefa.getNomeTarefa() );
+//        }
+//
+//        return tarefas;
+//
+//    }
 
 }

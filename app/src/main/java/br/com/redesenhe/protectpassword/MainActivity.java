@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.redesenhe.protectpassword.model.Registro;
+import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
 import br.com.redesenhe.protectpassword.system.UtilSystem;
 
 import static br.com.redesenhe.protectpassword.system.Constantes.SYSTEM_FOLDER;
@@ -28,12 +29,9 @@ import static br.com.redesenhe.protectpassword.system.Constantes.SYSTEM_FOLDER;
 public class MainActivity extends AppCompatActivity {
 
     private final int PERMISSAO_REQUEST = 1;
-    final UtilSystem utilSystem = new UtilSystem();
 
-    final String path = Environment.getExternalStorageDirectory() + SYSTEM_FOLDER;
-
-
-    Map<String, Object> mapDados = new HashMap<>();
+    // Repository
+    UsuarioRepository usuarioRepository = new UsuarioRepository(getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         // verifica se banco de dados existe se sim busca a senha
         // se nao cria banco
+        boolean existeUsuario = usuarioRepository.existeUsuario();
 
+        if (!existeUsuario)  Toast.makeText(MainActivity.this, "NAO EXISTE USUARIO", Toast.LENGTH_LONG).show();
 
 //        solicitaPermisao();
-        // teste
-        Registro registro = new Registro.Builder()
-                .comId("teste_id")
-                .comNome("Registro")
-                .comUsuario("Mayke")
-                .comUrl("")
-                .comSenha("123456")
-                .comComentario("")
-                .build();
-
-//        mapDados.put(registro.getNome(), registro);
 
     }
 
