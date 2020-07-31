@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSAO_REQUEST = 1;
 
     // Repository
-    UsuarioRepository usuarioRepository = new UsuarioRepository(getApplicationContext());
+    UsuarioRepository usuarioRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activty_main_toolbar);
         setSupportActionBar(toolbar);
 
+        // Repository
+        usuarioRepository = new UsuarioRepository(getApplicationContext());
+
         init();
     }
 
@@ -48,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         // verifica se banco de dados existe se sim busca a senha
         // se nao cria banco
-        boolean existeUsuario = usuarioRepository.existeUsuario();
-
-        if (!existeUsuario)  Toast.makeText(MainActivity.this, "NAO EXISTE USUARIO", Toast.LENGTH_LONG).show();
 
 //        solicitaPermisao();
 
@@ -106,8 +106,19 @@ public class MainActivity extends AppCompatActivity {
         // se o arquivo e novo salva a senha no map e grava no arquivo
         // se senha correta ou gravada no map libera proxima tela
 
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
-        finish();
+        boolean existeUsuario = usuarioRepository.existeUsuario();
+
+        if (!existeUsuario) {
+            Toast.makeText(MainActivity.this, "NAO EXISTE USUARIO", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Toast.makeText(MainActivity.this, "EXISTE USUARIO", Toast.LENGTH_LONG).show();
+
+
+
+//        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//        startActivity(intent);
+//        finish();
     }
 }

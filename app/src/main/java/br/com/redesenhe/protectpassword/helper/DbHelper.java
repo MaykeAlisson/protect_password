@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
 import static java.lang.String.format;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -62,8 +63,8 @@ public class DbHelper extends SQLiteOpenHelper {
                                       " %s TEXT NOT NULL, " +
                                       " %s TEXT , " +
                                       " %s INTEGER ," +
-                                      " %s TEXT NOT NULL " +
-                                      "FOREIGN KEY(%s) REFERENCES %s(%s)); ",
+                                      " %s TEXT NOT NULL," +
+                                      " FOREIGN KEY(%s) REFERENCES %s(%s)); ",
                                       TABELA_REGISTRO, REGISTRO_COLUMN_ID, REGISTRO_COLUMN_NOME,
                                       REGISTRO_COLUMN_USUARIO, REGISTRO_COLUMN_URL, REGISTRO_COLUMN_SENHA,
                                       REGISTRO_COLUMN_COMENTARIO, REGISTRO_COLUMN_ID_GRUPO, REGISTRO_COLUMN_CRIACAO,
@@ -73,9 +74,9 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(SQL_USUARIO);
             db.execSQL(SQL_GRUPO);
             db.execSQL(SQL_REGISTRO);
-            Log.i("INFO DB", "Sucesso ao criar a tabelas");
+            Log.i(LOG_PROTECT, "Sucesso ao criar a tabelas");
         } catch (Exception e) {
-            Log.i("INFO DB", "Erro ao criar a tabelas" + e.getMessage());
+            Log.i(LOG_PROTECT, "Erro ao criar a tabelas" + e.getMessage());
         }
 
 
