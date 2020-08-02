@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.redesenhe.protectpassword.adapter.GrupoListAdapter;
@@ -115,25 +116,25 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
     private void bucaDados() {
 
         // teste
-        Grupo grupo = new Grupo.Builder()
-                .comNome("Grupo 1")
-                .build();
-        grupoList.add(grupo);
-        Grupo grupo2 = new Grupo.Builder()
-                .comNome("Grupo 2")
-                .build();
-        grupoList.add(grupo2);
-        Grupo grupo3 = new Grupo.Builder()
-                .comNome("Grupo 3")
-                .build();
-        grupoList.add(grupo3);
-        Grupo grupo4 = new Grupo.Builder()
-                .comNome("Grupo 4")
-                .build();
-        grupoList.add(grupo4);
+//        Grupo grupo = new Grupo.Builder()
+//                .comNome("Grupo 1")
+//                .build();
+//        grupoList.add(grupo);
+//        Grupo grupo2 = new Grupo.Builder()
+//                .comNome("Grupo 2")
+//                .build();
+//        grupoList.add(grupo2);
+//        Grupo grupo3 = new Grupo.Builder()
+//                .comNome("Grupo 3")
+//                .build();
+//        grupoList.add(grupo3);
+//        Grupo grupo4 = new Grupo.Builder()
+//                .comNome("Grupo 4")
+//                .build();
+//        grupoList.add(grupo4);
         // fim teste
 
-//        grupoRepository.buscaTodos();
+        grupoList = grupoRepository.buscaTodos();
     }
 
     @Override
@@ -178,7 +179,17 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
             return;
         }
 
-        Toast.makeText(HomeActivity.this, "Cria o grupo!", Toast.LENGTH_LONG).show();
+        Grupo grupo = new Grupo.Builder()
+                .comNome(possivelNomeGrupo)
+                .comDataCriacao(new Date())
+                .build();
+
+        if (grupoRepository.salvar(grupo)){
+            bucaDados();
+            return;
+        }
+
+        Toast.makeText(HomeActivity.this, "Erro ao criar grupo", Toast.LENGTH_LONG).show();
     }
 
     public void criarRegistro(View view) {

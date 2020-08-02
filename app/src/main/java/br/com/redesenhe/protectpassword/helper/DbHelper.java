@@ -5,15 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import br.com.redesenhe.protectpassword.system.Constantes;
+
+import static br.com.redesenhe.protectpassword.system.Constantes.DATABASE_NAME;
+import static br.com.redesenhe.protectpassword.system.Constantes.DATA_BASE_VERSION;
 import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
 import static java.lang.String.format;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static int VERSION = 1;
-    public static String NOME_DB = "DB_PROTECT";
-
-    public static String TABELA_USUARIO = "grupo";
+    public static String TABELA_USUARIO = "usuario";
     public static String USUARIO_COLUMN_ID = "id";
     public static String USUARIO_COLUMN_SENHA = "senha";
     public static String USUARIO_COLUMN_DEVICE = "dispositivo";
@@ -36,7 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public DbHelper(Context context) {
-        super(context, NOME_DB, null, VERSION);
+        super(context, DATABASE_NAME, null, DATA_BASE_VERSION);
     }
 
     @Override
@@ -50,9 +51,9 @@ public class DbHelper extends SQLiteOpenHelper {
                                      TABELA_USUARIO, USUARIO_COLUMN_ID, USUARIO_COLUMN_SENHA, USUARIO_COLUMN_DEVICE, USUARIO_COLUMN_CRIACAO);
 
         String SQL_GRUPO = format(  "CREATE TABLE IF NOT EXISTS %s " +
-                                    "( %s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                                    " %s TEXT NOT NULL, " +
-                                    " %s TEXT NOT NULL); ",
+                                    "( %s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                                    " %s TEXT NOT NULL," +
+                                    " %s TEXT NOT NULL);",
                                     TABELA_GRUPO, GRUPO_COLUMN_ID, GRUPO_COLUMN_NOME, GRUPO_COLUMN_CRIACAO);
 
         String SQL_REGISTRO = format( "CREATE TABLE IF NOT EXISTS %s " +
@@ -85,7 +86,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-//        String sql = "DROP TABLE IF EXISTS " + TABELA_REGISTRO;
+//        String sql = "DROP TABLE IF EXISTS " + TABELA_GRUPO;
         try {
 //            db.execSQL(sql);
             onCreate(db);
@@ -95,4 +96,5 @@ public class DbHelper extends SQLiteOpenHelper {
         }
 
     }
+
 }
