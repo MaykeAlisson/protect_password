@@ -5,11 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import br.com.redesenhe.protectpassword.system.Constantes;
-
-import static br.com.redesenhe.protectpassword.system.Constantes.DATABASE_NAME;
-import static br.com.redesenhe.protectpassword.system.Constantes.DATA_BASE_VERSION;
-import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.Constantes.DATABASE_NAME;
+import static br.com.redesenhe.protectpassword.util.Constantes.DATA_BASE_VERSION;
+import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 import static java.lang.String.format;
 
 public class DbHelper extends SQLiteOpenHelper {

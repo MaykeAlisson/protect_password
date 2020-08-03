@@ -3,11 +3,8 @@ package br.com.redesenhe.protectpassword;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.DatabaseUtils;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,14 +20,13 @@ import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
-import br.com.redesenhe.protectpassword.system.Constantes;
+import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
-import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -77,9 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void solicitaPermisaoEscrita() {
+    private void solicitaPermisao() {
         //USUARIA DAR A PERMISSAO PARA LER
-        /*
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -88,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
             }
         }
-         */
 
         //USUARIA DAR A PERMISSAO PARA ESCREVER
         if (ContextCompat.checkSelfPermission(this,
@@ -124,12 +118,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void realizaBackupBase() {
-        solicitaPermisaoEscrita();
+        solicitaPermisao();
         try {
             DataBaseUtils.backupDataBase(this);
             String backupDBPath = Constantes.BACKUP_FOLDER + "/" + Constantes.DATABASE_NAME;
             File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
-            Toast.makeText(MainActivity.this, "parece tudo certo ", Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, "parece tudo certo ", Toast.LENGTH_LONG).show();
         }catch (IOException e){
             Log.d(LOG_PROTECT, e.getMessage());
             e.printStackTrace();

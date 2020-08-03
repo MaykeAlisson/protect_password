@@ -15,7 +15,7 @@ import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CR
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_SENHA;
-import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 import static br.com.redesenhe.protectpassword.util.UtilDate.convertStringData;
 import static java.lang.String.format;
 

@@ -1,11 +1,11 @@
-package br.com.redesenhe.protectpassword.system;
+package br.com.redesenhe.protectpassword.util;
 
 import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
 
-import static br.com.redesenhe.protectpassword.system.Constantes.SYSTEM_FOLDER;
+import static br.com.redesenhe.protectpassword.util.Constantes.SYSTEM_FOLDER;
 
 public class UtilSystem {
 

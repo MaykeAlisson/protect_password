@@ -16,7 +16,7 @@ import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_CRIA
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_NOME;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.TABELA_GRUPO;
-import static br.com.redesenhe.protectpassword.system.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 
 public class GrupoRepository implements IGrupoRepository {
 

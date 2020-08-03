@@ -10,12 +10,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import br.com.redesenhe.protectpassword.system.Constantes;
+import static br.com.redesenhe.protectpassword.util.Constantes.BACKUP_FOLDER;
+import static br.com.redesenhe.protectpassword.util.Constantes.DATABASE_NAME;
 
 public class DataBaseUtils {
 
-    private static final String SYSTEM_DB_FOLDER = "/data/br.com.redesenhe.protectpassword/databases";
-    private static final String SYSTEM_DB_PATH = SYSTEM_DB_FOLDER + File.separator + Constantes.DATABASE_NAME;
+    private static final String SYSTEM_DB_FOLDER = "//data//br.com.redesenhe.protectpassword//databases//";
+    private static final String SYSTEM_DB_PATH = SYSTEM_DB_FOLDER + DATABASE_NAME;
 
 
     /**
@@ -29,20 +30,24 @@ public class DataBaseUtils {
 
         if (sd.canWrite()) {
 
-            String backupDBPath = Constantes.BACKUP_FOLDER + "/" + Constantes.DATABASE_NAME;
+            File  backupFolder = new File(sd,BACKUP_FOLDER);
+            String backupDBPath = BACKUP_FOLDER + DATABASE_NAME;
             File currentDB = new File(data, SYSTEM_DB_PATH);
             File backupDB = new File(sd, backupDBPath);
 
             if (currentDB.exists()) {
-                
+
+                if (!backupFolder.exists()){
+                    backupFolder.mkdirs();
+                }
+
                 FileChannel src = new FileInputStream(currentDB).getChannel();
                 FileChannel dst = new FileOutputStream(backupDB).getChannel();
                 dst.transferFrom(src, 0, src.size());
-
                 src.close();
                 dst.close();
 
-                Toast.makeText(context, "Backup feito com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Backup feito com sucesso!", Toast.LENGTH_LONG).show();
 
                 return true;
             }
