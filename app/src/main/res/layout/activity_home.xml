@@ -12,6 +12,18 @@
         android:id="@+id/activty_home_toolbar"
         layout="@layout/toolbar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_home_listView"
+        android:layout_width="407dp"
+        android:layout_height="539dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activty_home_toolbar">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/activity_home_btnAdicionarGrupo"
         android:layout_width="179dp"
@@ -23,6 +35,8 @@
         android:text="Adicionar Grupo"
         android:textColor="@color/branco"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_home_btnAdicionarEntrada"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -31,23 +45,11 @@
         android:layout_height="47dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="#45484B"
         android:onClick="criarRegistro"
         android:text="Adicionar Entrada"
         android:textColor="@color/branco"
-        android:background="#45484B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_home_listView"
-        android:layout_width="409dp"
-        android:layout_height="599dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_home_btnAdicionarGrupo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activty_home_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

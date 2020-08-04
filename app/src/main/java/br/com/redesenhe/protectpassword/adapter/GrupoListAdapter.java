@@ -22,6 +22,10 @@ public class GrupoListAdapter extends  RecyclerView.Adapter<GrupoListAdapter.MyV
         this.listaGrupo = grupos;
     }
 
+    public void reloadList(){
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

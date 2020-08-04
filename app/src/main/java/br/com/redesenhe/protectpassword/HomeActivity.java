@@ -55,9 +55,11 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
     private void init() {
         listViewDados = findViewById(R.id.activity_home_listView);
-
         bucaDados();
+        configuraGrupoAdapter();
+    }
 
+    private void configuraGrupoAdapter() {
         // config adapter
         GrupoListAdapter adapter = new GrupoListAdapter(grupoList);
 
@@ -135,6 +137,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
         // fim teste
 
         grupoList = grupoRepository.buscaTodos();
+
     }
 
     @Override
@@ -186,6 +189,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
         if (grupoRepository.salvar(grupo)){
             bucaDados();
+            configuraGrupoAdapter();
             return;
         }
 

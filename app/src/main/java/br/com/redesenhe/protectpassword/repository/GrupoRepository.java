@@ -37,7 +37,7 @@ public class GrupoRepository implements IGrupoRepository {
 
         try {
             set.insert(TABELA_GRUPO, null, cv);
-            Log.i(LOG_PROTECT, "Grupo salvo com sucesso!");
+            Log.d(LOG_PROTECT, "Grupo salvo com sucesso!");
         } catch (Exception e) {
             Log.e(LOG_PROTECT, "Erro ao salvar grupo " + e.getMessage());
             return false;
@@ -71,8 +71,9 @@ public class GrupoRepository implements IGrupoRepository {
                     .build();
 
             listaGrupo.add(grupo);
-            Log.d(LOG_PROTECT, grupo.getNome() );
         }
+
+        Log.d(LOG_PROTECT, "GRUPO_REPOSITORY - buscaTodos EXECUTADO" );
 
         c.close();
 
