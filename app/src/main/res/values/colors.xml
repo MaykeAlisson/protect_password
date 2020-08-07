@@ -5,4 +5,5 @@
     <color name="colorAccent">#36393B</color>
     <color name="fundoApp">#808080</color>
     <color name="branco">#dcd9c9</color>
+    <color name="vermelhoSistema">#FF0000</color>
 </resources>

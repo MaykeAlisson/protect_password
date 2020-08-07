@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Protect Password</string>
+    <string name="deletar_grupo">Deletar Grupo</string>
 </resources>

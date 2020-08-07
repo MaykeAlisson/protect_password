@@ -9,12 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +33,8 @@ import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.GrupoRepository;
 import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
+
+import static java.lang.String.format;
 
 public class HomeActivity extends AppCompatActivity implements CustomDialogNovoGrupo.CustomDialogListener {
 
@@ -99,6 +108,11 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                                         grupoList.get(position).getNome()
                                 );
 
+                                final String nome = grupoList.get(position).getNome();
+                                final long idGrupo = grupoList.get(position).getId();
+                                
+                                exibeDialogDeletaGrupo(nome, idGrupo);
+
                                 Toast.makeText(
                                         getApplicationContext(),
                                         message,
@@ -113,6 +127,29 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                         }
                 )
         );
+    }
+
+    private void exibeDialogDeletaGrupo(String nome, final long idGrupo) {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.insere_texto_alerta, null);
+        final TextView mTextAlerta = view.findViewById(R.id.textMensagem);
+        final String mensagem = format("Ao apagar o grupo %s todos os registros do grupo sera apagado. Deseja Continuar ?", nome);
+        mTextAlerta.setText(mensagem);
+
+        final MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(this)
+                .setTitle(R.string.deletar_grupo)
+                .setStyle(Style.HEADER_WITH_TITLE)
+                .setCustomView(view, 20, 0, 20, 0)
+                .setNegative("Cancelar", null)
+                .setPositive("Deletar", new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+//                        grupoRepository.deleta(idGrupo);
+
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void bucaDados() {

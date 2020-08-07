@@ -121,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         solicitaPermisao();
         try {
             DataBaseUtils.backupDataBase(this);
-            String backupDBPath = Constantes.BACKUP_FOLDER + "/" + Constantes.DATABASE_NAME;
-            File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
-//            Toast.makeText(MainActivity.this, "parece tudo certo ", Toast.LENGTH_LONG).show();
+//            String backupDBPath = Constantes.BACKUP_FOLDER + "/" + Constantes.DATABASE_NAME;
+//            File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
+////            Toast.makeText(MainActivity.this, "parece tudo certo ", Toast.LENGTH_LONG).show();
         }catch (IOException e){
             Log.d(LOG_PROTECT, e.getMessage());
             e.printStackTrace();
