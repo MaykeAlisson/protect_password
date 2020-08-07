@@ -145,7 +145,9 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-//                        grupoRepository.deleta(idGrupo);
+                        grupoRepository.deleta(idGrupo);
+                        bucaDados();
+                        configuraGrupoAdapter();
 
                     }
                 }).build();

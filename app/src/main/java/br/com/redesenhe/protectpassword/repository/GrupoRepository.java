@@ -15,7 +15,9 @@ import br.com.redesenhe.protectpassword.model.Grupo;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_NOME;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_ID_GRUPO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.TABELA_GRUPO;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.TABELA_REGISTRO;
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 
 public class GrupoRepository implements IGrupoRepository {
@@ -47,7 +49,6 @@ public class GrupoRepository implements IGrupoRepository {
 
     }
 
-
     @Override
     public List<Grupo> buscaTodos(){
 
@@ -78,6 +79,30 @@ public class GrupoRepository implements IGrupoRepository {
         c.close();
 
         return listaGrupo;
+    }
+
+    public boolean deleta(long idGrupo) {
+
+        String sql = String.format("DELETE " +
+                                    " FROM %s" +
+                                    " WHERE %s = %s;",
+                                    TABELA_REGISTRO, REGISTRO_COLUMN_ID_GRUPO, idGrupo);
+
+        String sql2 = String.format("DELETE " +
+                                    " FROM %s" +
+                                    " WHERE %s = %s;",
+                                    TABELA_GRUPO, GRUPO_COLUMN_ID, idGrupo);
+
+        try {
+            set.execSQL(sql);
+            set.execSQL(sql2);
+            Log.d(LOG_PROTECT, "GRUPO_REPOSITORY - Deletando geristros e grupo com o id " + idGrupo );
+        }catch (Exception e){
+            Log.e(LOG_PROTECT, "Erro ao Deletar grupo " + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
 //    public Grupo buscaPorId(final Long id){
