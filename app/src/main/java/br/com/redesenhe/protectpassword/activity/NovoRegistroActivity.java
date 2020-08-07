@@ -15,7 +15,7 @@ public class NovoRegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_registro);
 
-        Toolbar toolbar = findViewById(R.id.activty_registro_toolbar);
+        Toolbar toolbar = findViewById(R.id.activty_novo_registro_toolbar);
         setTitle("Novo Registro");
         setSupportActionBar(toolbar);
     }

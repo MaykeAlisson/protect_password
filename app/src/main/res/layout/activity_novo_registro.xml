@@ -9,7 +9,7 @@
     tools:context=".activity.NovoRegistroActivity">
 
     <include
-        android:id="@+id/activty_registro_toolbar"
+        android:id="@+id/activty_novo_registro_toolbar"
         layout="@layout/toolbar" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:textColor="#B5B1B1"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activty_registro_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/activty_novo_registro_toolbar" />
 
     <EditText
         android:id="@+id/activity_registro_nome"
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.317"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/activty_registro_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/activty_novo_registro_toolbar" />
 
     <TextView
         android:id="@+id/textView2"
