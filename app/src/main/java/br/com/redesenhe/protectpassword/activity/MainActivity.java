@@ -1,10 +1,9 @@
-package br.com.redesenhe.protectpassword;
+package br.com.redesenhe.protectpassword.activity;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,12 +17,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.File;
 import java.io.IOException;
 
+import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
-import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;

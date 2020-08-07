@@ -5,36 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fundoApp"
-    tools:context=".activity.HomeActivity">
+    tools:context=".activity.ListRegistrosActivity">
 
     <include
-        android:id="@+id/activty_home_toolbar"
+        android:id="@+id/activty_list_registro_toolbar"
         layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_home_listView"
+        android:id="@+id/activity_list_registro_listView"
         android:layout_width="407dp"
         android:layout_height="539dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activty_home_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/activty_list_registro_toolbar">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/activity_home_btnAdicionarGrupo"
-        android:layout_width="179dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
-        android:background="#45484B"
-        android:onClick="openDialog"
-        android:text="Adicionar Grupo"
-        android:textColor="@color/branco"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_list_registro_listView"
+        app:srcCompat="@drawable/ic_add_branco_24"
+        tools:ignore="VectorDrawableCompat" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

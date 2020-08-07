@@ -1,4 +1,4 @@
-package br.com.redesenhe.protectpassword;
+package br.com.redesenhe.protectpassword.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -6,12 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.View;
 
-public class RegistroActivity extends AppCompatActivity {
+import br.com.redesenhe.protectpassword.R;
+
+public class NovoRegistroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro);
+        setContentView(R.layout.activity_novo_registro);
 
         Toolbar toolbar = findViewById(R.id.activty_registro_toolbar);
         setTitle("Novo Registro");

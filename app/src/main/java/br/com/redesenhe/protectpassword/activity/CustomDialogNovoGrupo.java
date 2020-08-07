@@ -1,4 +1,4 @@
-package br.com.redesenhe.protectpassword;
+package br.com.redesenhe.protectpassword.activity;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import br.com.redesenhe.protectpassword.R;
 
 public class CustomDialogNovoGrupo extends AppCompatDialogFragment {
     private EditText editTextNomeGrupo;

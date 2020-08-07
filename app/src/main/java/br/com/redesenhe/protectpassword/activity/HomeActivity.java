@@ -1,4 +1,4 @@
-package br.com.redesenhe.protectpassword;
+package br.com.redesenhe.protectpassword.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.adapter.GrupoListAdapter;
 import br.com.redesenhe.protectpassword.model.Grupo;
 import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.GrupoRepository;
-import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
 
 import static java.lang.String.format;
@@ -91,15 +91,10 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                                         grupoList.get(position).getNome()
                                 );
 
-//                                Intent intent = new Intent(ContasActivity.this, ContaDetalheActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, ListRegistrosActivity.class);
 //                                intent.putExtra("idConta", categoriasList.get(position).getDescricao());
-//                                startActivity(intent);
-
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        message,
-                                        Toast.LENGTH_SHORT
-                                ).show();
+                                startActivity(intent);
+                                return;
                             }
 
                             @Override
@@ -107,17 +102,9 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                                 final String message = String.format("Grupo %s click long !",
                                         grupoList.get(position).getNome()
                                 );
-
                                 final String nome = grupoList.get(position).getNome();
                                 final long idGrupo = grupoList.get(position).getId();
-                                
                                 exibeDialogDeletaGrupo(nome, idGrupo);
-
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        message,
-                                        Toast.LENGTH_SHORT
-                                ).show();
                             }
 
                             @Override
@@ -149,34 +136,14 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                         bucaDados();
                         configuraGrupoAdapter();
 
+
                     }
                 }).build();
         dialog.show();
     }
 
     private void bucaDados() {
-
-        // teste
-//        Grupo grupo = new Grupo.Builder()
-//                .comNome("Grupo 1")
-//                .build();
-//        grupoList.add(grupo);
-//        Grupo grupo2 = new Grupo.Builder()
-//                .comNome("Grupo 2")
-//                .build();
-//        grupoList.add(grupo2);
-//        Grupo grupo3 = new Grupo.Builder()
-//                .comNome("Grupo 3")
-//                .build();
-//        grupoList.add(grupo3);
-//        Grupo grupo4 = new Grupo.Builder()
-//                .comNome("Grupo 4")
-//                .build();
-//        grupoList.add(grupo4);
-        // fim teste
-
         grupoList = grupoRepository.buscaTodos();
-
     }
 
     @Override
@@ -234,11 +201,5 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
         Toast.makeText(HomeActivity.this, "Erro ao criar grupo", Toast.LENGTH_LONG).show();
     }
-
-    public void criarRegistro(View view) {
-        Intent intent = new Intent(getApplicationContext(), RegistroActivity.class);
-        startActivity(intent);
-    }
-
 
 }
