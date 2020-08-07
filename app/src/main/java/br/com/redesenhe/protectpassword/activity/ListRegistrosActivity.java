@@ -15,13 +15,19 @@ import br.com.redesenhe.protectpassword.R;
 
 public class ListRegistrosActivity extends AppCompatActivity {
 
+    private Long idGrupo;
+    private String nomeGrupo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_registros);
 
+        this.nomeGrupo = getIntent().getExtras().getString("nomeGrupo");
+        this.idGrupo = getIntent().getExtras().getLong("idGrupo");
+
         Toolbar toolbar = findViewById(R.id.activty_list_registro_toolbar);
-        setTitle("NOME DO GRUPO");
+        setTitle(nomeGrupo);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
@@ -34,5 +40,21 @@ public class ListRegistrosActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        init();
     }
+
+    private void init() {
+        buscaRegistros();
+        configuraListViewRegistros();
+    }
+
+    private void buscaRegistros() {
+
+    }
+
+    private void configuraListViewRegistros() {
+    }
+
+
 }
