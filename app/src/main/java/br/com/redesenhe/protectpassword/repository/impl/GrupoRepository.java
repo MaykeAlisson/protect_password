@@ -1,4 +1,4 @@
-package br.com.redesenhe.protectpassword.repository;
+package br.com.redesenhe.protectpassword.repository.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Grupo;
+import br.com.redesenhe.protectpassword.repository.IGrupoRepository;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_ID;
@@ -81,6 +82,7 @@ public class GrupoRepository implements IGrupoRepository {
         return listaGrupo;
     }
 
+    @Override
     public boolean deleta(long idGrupo) {
 
         String sql = String.format("DELETE " +

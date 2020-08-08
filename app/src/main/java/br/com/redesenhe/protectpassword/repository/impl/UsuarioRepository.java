@@ -1,4 +1,4 @@
-package br.com.redesenhe.protectpassword.repository;
+package br.com.redesenhe.protectpassword.repository.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,7 @@ import java.util.Date;
 
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
+import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;

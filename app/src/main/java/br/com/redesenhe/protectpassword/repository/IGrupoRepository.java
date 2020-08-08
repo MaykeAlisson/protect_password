@@ -8,4 +8,6 @@ public interface IGrupoRepository {
     boolean salvar(Grupo grupo);
 
     List<Grupo> buscaTodos();
+
+    boolean deleta(long idGrupo);
 }

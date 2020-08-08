@@ -21,7 +21,8 @@ import java.io.IOException;
 
 import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.model.Usuario;
-import br.com.redesenhe.protectpassword.repository.UsuarioRepository;
+import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
+import br.com.redesenhe.protectpassword.repository.impl.UsuarioRepository;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSAO_REQUEST = 1;
 
     // Repository
-    UsuarioRepository usuarioRepository;
+    IUsuarioRepository usuarioRepository;
 
     private boolean existeUsuario;
     Usuario usuario;

@@ -1,12 +1,5 @@
 package br.com.redesenhe.protectpassword.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +10,13 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,7 +31,8 @@ import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.adapter.GrupoListAdapter;
 import br.com.redesenhe.protectpassword.model.Grupo;
 import br.com.redesenhe.protectpassword.model.Registro;
-import br.com.redesenhe.protectpassword.repository.GrupoRepository;
+import br.com.redesenhe.protectpassword.repository.IGrupoRepository;
+import br.com.redesenhe.protectpassword.repository.impl.GrupoRepository;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
 
 import static java.lang.String.format;
@@ -39,10 +40,9 @@ import static java.lang.String.format;
 public class HomeActivity extends AppCompatActivity implements CustomDialogNovoGrupo.CustomDialogListener {
 
     // Repository
-    GrupoRepository grupoRepository;
+    IGrupoRepository grupoRepository;
 
     private List<Grupo> grupoList = new ArrayList<>();
-    private List<Registro> registroList = new ArrayList<>();
 
     // Componentes
     private RecyclerView listViewDados;
