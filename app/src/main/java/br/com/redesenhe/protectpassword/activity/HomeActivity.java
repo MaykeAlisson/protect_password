@@ -90,9 +90,12 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                                 final String message = String.format("Grupo %s selecionado!",
                                         grupoList.get(position).getNome()
                                 );
+                                final String nome = grupoList.get(position).getNome();
+                                final long idGrupo = grupoList.get(position).getId();
 
                                 Intent intent = new Intent(HomeActivity.this, ListRegistrosActivity.class);
-//                                intent.putExtra("idConta", categoriasList.get(position).getDescricao());
+                                intent.putExtra("nomeGrupo", nome);
+                                intent.putExtra("idGrupo", idGrupo);
                                 startActivity(intent);
                                 return;
                             }

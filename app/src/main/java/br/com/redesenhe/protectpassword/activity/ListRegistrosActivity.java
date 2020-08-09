@@ -2,25 +2,28 @@ package br.com.redesenhe.protectpassword.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import br.com.redesenhe.protectpassword.R;
+import br.com.redesenhe.protectpassword.adapter.RegistroListAdapter;
 import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.IRegistroRepository;
-import br.com.redesenhe.protectpassword.repository.impl.GrupoRepository;
 import br.com.redesenhe.protectpassword.repository.impl.RegistroRepository;
+import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
 
 import static java.util.Objects.requireNonNull;
 
@@ -67,6 +70,7 @@ public class ListRegistrosActivity extends AppCompatActivity {
     }
 
     private void init() {
+        listViewDados = findViewById(R.id.activity_list_registro_listView);
         buscaRegistros();
         configuraListViewRegistros();
     }
@@ -76,6 +80,52 @@ public class ListRegistrosActivity extends AppCompatActivity {
     }
 
     private void configuraListViewRegistros() {
+        // config adapter
+        RegistroListAdapter adapter = new RegistroListAdapter(registroList);
+
+        // config recyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        listViewDados.setLayoutManager(layoutManager);
+        listViewDados.setHasFixedSize(true);
+        listViewDados.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        listViewDados.setAdapter(adapter);
+
+        // evento click
+        listViewDados.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        listViewDados,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                final String message = String.format("Registro %s selecionado!",
+                                        registroList.get(position).getNome()
+                                );
+
+//                                Intent intent = new Intent(HomeActivity.this, ListRegistrosActivity.class);
+//                                intent.putExtra("idConta", categoriasList.get(position).getDescricao());
+//                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                final String message = String.format("Registro %s click long !",
+                                        registroList.get(position).getNome()
+                                );
+                                final String nome = registroList.get(position).getNome();
+                                final long idGrupo = registroList.get(position).getId();
+//                                exibeDialogDeletaGrupo(nome, idGrupo);
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
     }
 
 
