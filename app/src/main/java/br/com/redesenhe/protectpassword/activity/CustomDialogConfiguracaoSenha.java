@@ -32,32 +32,91 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
     private CheckBox ckUnderline;
     private CheckBox ckEspecial;
 
+    // View
+    private View view;
+
     // Listener
     private CustomDialogListener listener;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_dialog_senha, null);
+        view = inflater.inflate(R.layout.layout_dialog_senha, null);
         builder.setView(view)
                 .setTitle("Gerar Senha")
                 .setPositiveButton("Aceitar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        String senhaGerada = editTextSenhaGerada.getText().toString();
+                        listener.applyText(senhaGerada);
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
+
+        init();
+
         return builder.create();
+    }
+
+    private void init() {
+        editTextSenhaGerada = view.findViewById(R.id.dialog_senha_senha);
+        btnGerarSenha = view.findViewById(R.id.dialog_senha_buttonGerarSenha);
+        editTextTamanhoSenha = view.findViewById(R.id.dialog_senha_tamanhoSenha);
+        btnTamanhoSenha6 = view.findViewById(R.id.dialog_senha_buttonTamanho6);
+        btnTamanhoSenha8 = view.findViewById(R.id.dialog_senha_buttonTamanho8);
+        btnTamanhoSenha12 = view.findViewById(R.id.dialog_senha_buttonTamanho12);
+        ckMaiuscula = view.findViewById(R.id.dialog_senha_checkBox_maiuscula);
+        ckMinuscula = view.findViewById(R.id.dialog_senha_checkBox_minuscula);
+        ckDigito = view.findViewById(R.id.dialog_senha_checkBox_digitos);
+        ckUnderline = view.findViewById(R.id.dialog_senha_checkBox_underline);
+        ckEspecial =view.findViewById(R.id.dialog_senha_checkBox_especial);
+
+        editTextTamanhoSenha.setText("8");
+        ckMaiuscula.setChecked(true);
+        ckMinuscula.setChecked(true);
+        ckDigito.setChecked(true);
+
+        geraSenha();
+
+        btnGerarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        btnTamanhoSenha6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextTamanhoSenha.setText("6");
+            }
+        });
+        btnTamanhoSenha8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextTamanhoSenha.setText("8");
+            }
+        });
+        btnTamanhoSenha12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextTamanhoSenha.setText("12");
+            }
+        });
+    }
+
+    private void geraSenha(){
+        // verifica campos
+
+        String senha = "senha";
+        editTextSenhaGerada.setText(senha);
     }
 
     @Override
@@ -74,7 +133,8 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
     }
 
     public interface CustomDialogListener{
-        void applyText(String nomeGrupo);
+        void applyText(String senhaGerada);
     }
+
 
 }

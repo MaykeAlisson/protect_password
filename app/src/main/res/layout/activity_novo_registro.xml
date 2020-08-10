@@ -185,6 +185,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:background="@color/colorPrimaryDark"
+        android:onClick="cadastroNovoRegistro"
         android:text="Salvar"
         android:textColor="@color/branco"
         android:textSize="15sp"

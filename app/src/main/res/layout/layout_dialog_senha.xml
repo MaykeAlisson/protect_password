@@ -13,6 +13,7 @@
         android:layout_marginEnd="54dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,11 +44,12 @@
     <EditText
         android:id="@+id/dialog_senha_tamanhoSenha"
         android:layout_width="103dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="11dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -56,6 +58,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@color/fundoApp"
         android:text="6"
         app:layout_constraintEnd_toStartOf="@+id/dialog_senha_buttonTamanho8"
@@ -67,6 +70,7 @@
         android:id="@+id/dialog_senha_buttonTamanho8"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="@color/fundoApp"
         android:text="8"
         app:layout_constraintEnd_toStartOf="@+id/dialog_senha_buttonTamanho12"
@@ -78,6 +82,7 @@
         android:id="@+id/dialog_senha_buttonTamanho12"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/fundoApp"
         android:text="12"

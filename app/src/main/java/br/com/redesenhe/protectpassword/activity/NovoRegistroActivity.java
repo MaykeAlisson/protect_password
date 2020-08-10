@@ -6,10 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import br.com.redesenhe.protectpassword.R;
 
-public class NovoRegistroActivity extends AppCompatActivity {
+public class NovoRegistroActivity extends AppCompatActivity implements CustomDialogConfiguracaoSenha.CustomDialogListener{
 
     // Campos
     private EditText inputNome;
@@ -48,5 +49,29 @@ public class NovoRegistroActivity extends AppCompatActivity {
 
     public void onClickCancelar(View view){
         finish();
+    }
+
+    @Override
+    public void applyText(String senhaGerada) {
+        recuperaSenhaGerada(senhaGerada);
+    }
+
+    private void recuperaSenhaGerada(String senhaGerada) {
+        if (senhaGerada.trim().isEmpty()) {
+            Toast.makeText(this, "Senha Invalida!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        inputSenha.setText(senhaGerada);
+        inputConfirmaSenha.setText(senhaGerada);
+
+    }
+
+    private void validaCampos(){
+
+    }
+
+    public void cadastroNovoRegistro(View view){
+        validaCampos();
     }
 }
