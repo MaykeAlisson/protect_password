@@ -97,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                                 intent.putExtra("nomeGrupo", nome);
                                 intent.putExtra("idGrupo", idGrupo);
                                 startActivity(intent);
-                                return;
                             }
 
                             @Override
