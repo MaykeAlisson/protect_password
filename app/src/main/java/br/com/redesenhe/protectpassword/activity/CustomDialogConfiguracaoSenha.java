@@ -48,7 +48,7 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
                 .setPositiveButton("Aceitar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        
+
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
