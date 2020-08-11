@@ -122,10 +122,9 @@ public class ListRegistrosActivity extends AppCompatActivity {
                                         registroList.get(position).getNome()
                                 );
 
-//                                Intent intent = new Intent(HomeActivity.this, ListRegistrosActivity.class);
-//                                intent.putExtra("idConta", categoriasList.get(position).getDescricao());
-//                                startActivity(intent);
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(ListRegistrosActivity.this, RegistroActivity.class);
+                                intent.putExtra("idRegistro", registroList.get(position).getId());
+                                startActivity(intent);
                             }
 
                             @Override
