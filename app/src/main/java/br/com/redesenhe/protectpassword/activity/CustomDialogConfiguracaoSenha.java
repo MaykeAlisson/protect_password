@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import br.com.redesenhe.protectpassword.R;
 
+import static java.lang.Long.parseLong;
+
 public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
 
     // Componentes
@@ -114,6 +116,12 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
 
     private void geraSenha(){
         // verifica campos
+        Long tamanho = parseLong(editTextTamanhoSenha.getText().toString());
+        Boolean maiusculo = ckMaiuscula.isChecked();
+        Boolean minusculo = ckMinuscula.isChecked();
+        Boolean digito = ckDigito.isChecked();
+        Boolean underline = ckUnderline.isChecked();
+        Boolean especial = ckEspecial.isChecked();
 
         String senha = "senha";
         editTextSenhaGerada.setText(senha);
