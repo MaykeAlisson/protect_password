@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import br.com.redesenhe.protectpassword.R;
+import br.com.redesenhe.protectpassword.util.UtilSenha;
 
+import static java.lang.Integer.getInteger;
+import static java.lang.Integer.numberOfLeadingZeros;
 import static java.lang.Long.parseLong;
 
 public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
@@ -91,7 +95,7 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
         btnGerarSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                geraSenha();
             }
         });
         btnTamanhoSenha6.setOnClickListener(new View.OnClickListener() {
@@ -116,15 +120,21 @@ public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
 
     private void geraSenha(){
         // verifica campos
-        Long tamanho = parseLong(editTextTamanhoSenha.getText().toString());
+        if (editTextTamanhoSenha.getText().toString().trim().isEmpty()){
+            Toast.makeText(getActivity(), "Tamanho não Informado!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        int tamanho = Integer.parseInt(editTextTamanhoSenha.getText().toString());
         Boolean maiusculo = ckMaiuscula.isChecked();
         Boolean minusculo = ckMinuscula.isChecked();
         Boolean digito = ckDigito.isChecked();
         Boolean underline = ckUnderline.isChecked();
         Boolean especial = ckEspecial.isChecked();
 
-        String senha = "senha";
-        editTextSenhaGerada.setText(senha);
+        String senhaGerada = UtilSenha.gerarSenha(tamanho, maiusculo, minusculo, digito, underline, especial);
+
+        editTextSenhaGerada.setText(senhaGerada);
     }
 
     @Override

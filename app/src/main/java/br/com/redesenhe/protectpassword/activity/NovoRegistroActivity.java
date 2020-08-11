@@ -8,9 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import br.com.redesenhe.protectpassword.R;
+import br.com.redesenhe.protectpassword.model.Registro;
+import br.com.redesenhe.protectpassword.repository.IRegistroRepository;
+import br.com.redesenhe.protectpassword.repository.impl.RegistroRepository;
 
 public class NovoRegistroActivity extends AppCompatActivity implements CustomDialogConfiguracaoSenha.CustomDialogListener{
+
+    // Repository
+    IRegistroRepository registroRepository;
 
     // Campos
     private EditText inputNome;
@@ -20,6 +28,9 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
     private EditText inputConfirmaSenha;
     private EditText inputComentario;
 
+    // Put Extra
+    private Long idGrupo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +39,10 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         Toolbar toolbar = findViewById(R.id.activty_novo_registro_toolbar);
         setTitle("Novo Registro");
         setSupportActionBar(toolbar);
+
+        registroRepository = new RegistroRepository(getApplicationContext());
+
+        this.idGrupo = getIntent().getExtras().getLong("idGrupo");
 
         init();
     }
@@ -67,11 +82,51 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
 
     }
 
-    private void validaCampos(){
+    private boolean validaCampos(){
+
+        if (inputNome.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Nome obrigatorio!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (inputSenha.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Senha obrigatoria!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        String senha = inputSenha.getText().toString();
+        String confirmaSenha = inputConfirmaSenha.getText().toString();
+
+        if (!senha.equals(confirmaSenha)){
+            inputSenha.setError("Senhas diferentes");
+            inputConfirmaSenha.setError("Senhas diferentes");
+            Toast.makeText(this, "Senhas diferentes!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
 
     }
 
     public void cadastroNovoRegistro(View view){
-        validaCampos();
+
+        if (!validaCampos()) return;
+
+        Registro registro = new Registro.Builder()
+                .comNome(inputNome.getText().toString())
+                .comUsuario(inputUsuario.getText().toString())
+                .comUrl(inputUrl.getText().toString())
+                .comSenha(inputSenha.getText().toString())
+                .comComentario(inputComentario.getText().toString())
+                .comIdGrupo(idGrupo)
+                .comDataCriacao(new Date())
+                .build();
+
+        if (registroRepository.salvar(registro)){
+            finish();
+            return;
+        }
+
+        Toast.makeText(this, "Erro ao Salvar Registro!", Toast.LENGTH_LONG).show();
     }
 }

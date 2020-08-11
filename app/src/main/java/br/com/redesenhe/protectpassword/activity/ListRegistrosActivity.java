@@ -32,6 +32,8 @@ public class ListRegistrosActivity extends AppCompatActivity {
     // Repository
     IRegistroRepository registroRepository;
 
+    private RegistroListAdapter adapter;
+
     private List<Registro> registroList = new ArrayList<>();
 
     // Componentes
@@ -62,6 +64,7 @@ public class ListRegistrosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NovoRegistroActivity.class);
+                intent.putExtra("idGrupo", idGrupo);
                 startActivity(intent);
             }
         });
@@ -81,7 +84,7 @@ public class ListRegistrosActivity extends AppCompatActivity {
 
     private void configuraListViewRegistros() {
         // config adapter
-        RegistroListAdapter adapter = new RegistroListAdapter(registroList);
+        adapter = new RegistroListAdapter(registroList);
 
         // config recyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -90,6 +93,23 @@ public class ListRegistrosActivity extends AppCompatActivity {
         listViewDados.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         listViewDados.setAdapter(adapter);
 
+        configuraOnClickListView();
+
+    }
+
+    private void recarregaListViewRegistros() {
+        // config adapter
+        adapter = new RegistroListAdapter(registroList);
+
+        // config recyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        listViewDados.setLayoutManager(layoutManager);
+        listViewDados.setHasFixedSize(true);
+        listViewDados.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        listViewDados.setAdapter(adapter);
+    }
+
+    private void configuraOnClickListView() {
         // evento click
         listViewDados.addOnItemTouchListener(
                 new RecyclerItemClickListener(
@@ -126,6 +146,13 @@ public class ListRegistrosActivity extends AppCompatActivity {
                         }
                 )
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buscaRegistros();
+        recarregaListViewRegistros();
     }
 
 

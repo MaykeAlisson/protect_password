@@ -49,7 +49,7 @@ public class GrupoListAdapter extends  RecyclerView.Adapter<GrupoListAdapter.MyV
         return listaGrupo.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgViewIconeMundo;
         TextView txtViewNome;

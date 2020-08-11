@@ -38,6 +38,11 @@ public class RegistroListAdapter extends RecyclerView.Adapter<RegistroListAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        Registro registro = listaRegistro.get(position);
+        holder.imgViewIconeMundo.setImageResource(R.drawable.icone_mundo);
+        holder.txtViewNome.setText(registro.getNome());
+        holder.imgViewIconeKey.setImageResource(R.drawable.icone_key);
+
     }
 
     @Override
@@ -45,7 +50,7 @@ public class RegistroListAdapter extends RecyclerView.Adapter<RegistroListAdapte
         return listaRegistro.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgViewIconeMundo;
         TextView txtViewNome;
