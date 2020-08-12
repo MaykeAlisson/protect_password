@@ -19,6 +19,7 @@ import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_NOME;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_COMENTARIO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_CRIACAO;
+import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_ID_GRUPO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_NOME;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_SENHA;
@@ -60,6 +61,48 @@ public class RegistroRepository implements IRegistroRepository {
 
         return true;
 
+    }
+
+    @Override
+    public Registro buscaPorId(final Long idRegistro){
+
+        String sql = String.format( "SELECT *" +
+                                    " FROM %s" +
+                                    " WHERE %s = %s;",
+                                    TABELA_REGISTRO, REGISTRO_COLUMN_ID, idRegistro);
+
+        Cursor c = get.rawQuery(sql, null);
+
+        Registro registro = null;
+
+        if (c != null){
+            if (c.moveToFirst()){
+
+                Long id = c.getLong( c.getColumnIndex(GRUPO_COLUMN_ID) );
+                String nome = c.getString( c.getColumnIndex(REGISTRO_COLUMN_NOME) );
+                String usuario = c.getString( c.getColumnIndex(REGISTRO_COLUMN_USUARIO) );
+                String url = c.getString( c.getColumnIndex(REGISTRO_COLUMN_URL) );
+                String senha = c.getString( c.getColumnIndex(REGISTRO_COLUMN_SENHA) );
+                String comentario = c.getString( c.getColumnIndex(REGISTRO_COLUMN_COMENTARIO) );
+                Long grupo = c.getLong( c.getColumnIndex(REGISTRO_COLUMN_ID_GRUPO) );
+//              String nome = c.getString( c.getColumnIndex(REGISTRO_COLUMN_CRIACAO) );
+
+                 registro = new Registro.Builder()
+                        .comId(id)
+                        .comNome(nome)
+                        .comUsuario(usuario)
+                        .comUrl(url)
+                        .comSenha(senha)
+                        .comComentario(comentario)
+                        .comIdGrupo(grupo)
+                        .build();
+
+            }
+            c.close();
+
+        }
+
+        return registro;
     }
 
     @Override

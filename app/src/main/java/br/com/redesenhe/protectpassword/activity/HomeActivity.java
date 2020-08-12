@@ -163,7 +163,9 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                 break;
 
             case R.id.menu_home_fechar:
-                Toast.makeText(HomeActivity.this, "Menu Fechar", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
 
             case R.id.menu_home_mudar_senha:
