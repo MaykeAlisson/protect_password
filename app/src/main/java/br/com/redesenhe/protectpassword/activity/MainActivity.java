@@ -139,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
-        finish();
 
 /*
         if (TextUtils.isEmpty(inputSenha.getText())) {
@@ -174,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         if (senha.equals(senhaDigitada)) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
-            finish();
             return;
         }
 

@@ -12,13 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.RegistroActivity" />
+        <activity
+            android:name=".activity.RegistroActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ListRegistrosActivity"
             android:label="@string/title_activity_list_registros"
             android:parentActivityName=".activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.NovoRegistroActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NovoRegistroActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
