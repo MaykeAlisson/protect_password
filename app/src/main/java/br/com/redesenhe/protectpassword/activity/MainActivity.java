@@ -4,10 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Campos
     private EditText inputSenha;
+    private CheckBox mostrarSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
         usuarioRepository = new UsuarioRepository(getApplicationContext());
 
         inputSenha = findViewById(R.id.activity_main_textSenha);
+        mostrarSenha = findViewById(R.id.activity_main_mostrarSenha);
+        mostrarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mostrarSenha.isChecked()){
+                    inputSenha.setInputType(InputType.TYPE_CLASS_TEXT);
+                    return;
+                }
+                inputSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        });
 
         init();
     }
