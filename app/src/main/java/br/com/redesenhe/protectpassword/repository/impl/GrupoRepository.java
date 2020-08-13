@@ -107,7 +107,4 @@ public class GrupoRepository implements IGrupoRepository {
         return true;
     }
 
-//    public Grupo buscaPorId(final Long id){
-//
-//    }
 }

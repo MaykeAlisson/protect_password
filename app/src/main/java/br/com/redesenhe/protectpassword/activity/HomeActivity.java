@@ -87,9 +87,6 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                final String message = String.format("Grupo %s selecionado!",
-                                        grupoList.get(position).getNome()
-                                );
                                 final String nome = grupoList.get(position).getNome();
                                 final long idGrupo = grupoList.get(position).getId();
 
@@ -101,9 +98,6 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                final String message = String.format("Grupo %s click long !",
-                                        grupoList.get(position).getNome()
-                                );
                                 final String nome = grupoList.get(position).getNome();
                                 final long idGrupo = grupoList.get(position).getId();
                                 exibeDialogDeletaGrupo(nome, idGrupo);
@@ -133,12 +127,9 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                 .setPositive("Deletar", new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
                         grupoRepository.deleta(idGrupo);
                         bucaDados();
                         configuraGrupoAdapter();
-
-
                     }
                 }).build();
         dialog.show();

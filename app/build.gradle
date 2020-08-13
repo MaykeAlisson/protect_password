@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "br.com.redesenhe.protectpassword"
-        minSdkVersion 20
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

@@ -2,17 +2,24 @@ package br.com.redesenhe.protectpassword.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -25,6 +32,7 @@ import br.com.redesenhe.protectpassword.repository.IRegistroRepository;
 import br.com.redesenhe.protectpassword.repository.impl.RegistroRepository;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
 
+import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
 public class ListRegistrosActivity extends AppCompatActivity {
@@ -118,10 +126,6 @@ public class ListRegistrosActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                final String message = String.format("Registro %s selecionado!",
-                                        registroList.get(position).getNome()
-                                );
-
                                 Intent intent = new Intent(ListRegistrosActivity.this, RegistroActivity.class);
                                 intent.putExtra("idRegistro", registroList.get(position).getId());
                                 startActivity(intent);
@@ -129,13 +133,9 @@ public class ListRegistrosActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                final String message = String.format("Registro %s click long !",
-                                        registroList.get(position).getNome()
-                                );
                                 final String nome = registroList.get(position).getNome();
-                                final long idGrupo = registroList.get(position).getId();
-//                                exibeDialogDeletaGrupo(nome, idGrupo);
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                final long idRegistro = registroList.get(position).getId();
+                                exibeDialogDeletaRegistro(nome, idRegistro);
                             }
 
                             @Override
@@ -145,6 +145,29 @@ public class ListRegistrosActivity extends AppCompatActivity {
                         }
                 )
         );
+    }
+
+    private void exibeDialogDeletaRegistro(String nome, final long idRegistro) {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.insere_texto_alerta, null);
+        final TextView mTextAlerta = view.findViewById(R.id.textMensagem);
+        final String mensagem = format("Deseja mesmo apagar o registro %s  ?", nome);
+        mTextAlerta.setText(mensagem);
+
+        final MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(this)
+                .setTitle(R.string.deletar_grupo)
+                .setStyle(Style.HEADER_WITH_TITLE)
+                .setCustomView(view, 20, 0, 20, 0)
+                .setNegative("Cancelar", null)
+                .setPositive("Deletar", new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        registroRepository.deleta(idRegistro);
+                        buscaRegistros();
+                        recarregaListViewRegistros();
+                    }
+                }).build();
+        dialog.show();
     }
 
     @Override

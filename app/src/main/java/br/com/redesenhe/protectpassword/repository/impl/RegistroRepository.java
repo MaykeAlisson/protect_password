@@ -13,6 +13,7 @@ import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Grupo;
 import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.IRegistroRepository;
+import br.com.redesenhe.protectpassword.util.UtilCrypto;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.GRUPO_COLUMN_ID;
@@ -28,6 +29,8 @@ import static br.com.redesenhe.protectpassword.helper.DbHelper.REGISTRO_COLUMN_U
 import static br.com.redesenhe.protectpassword.helper.DbHelper.TABELA_GRUPO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.TABELA_REGISTRO;
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.UtilCrypto.descriptografar;
+import static br.com.redesenhe.protectpassword.util.UtilCrypto.encriptar;
 
 public class RegistroRepository implements IRegistroRepository {
 
@@ -46,7 +49,7 @@ public class RegistroRepository implements IRegistroRepository {
         cv.put(REGISTRO_COLUMN_NOME, registro.getNome());
         cv.put(REGISTRO_COLUMN_USUARIO, registro.getUsuario());
         cv.put(REGISTRO_COLUMN_URL, registro.getUrl());
-        cv.put(REGISTRO_COLUMN_SENHA, registro.getSenha());
+        cv.put(REGISTRO_COLUMN_SENHA, encriptar(registro.getSenha()));
         cv.put(REGISTRO_COLUMN_COMENTARIO, registro.getComentario());
         cv.put(REGISTRO_COLUMN_ID_GRUPO, registro.getIdGrupo());
         cv.put(REGISTRO_COLUMN_CRIACAO, registro.getDataCriacao().toString());
@@ -92,7 +95,7 @@ public class RegistroRepository implements IRegistroRepository {
                         .comNome(nome)
                         .comUsuario(usuario)
                         .comUrl(url)
-                        .comSenha(senha)
+                        .comSenha(descriptografar(senha))
                         .comComentario(comentario)
                         .comIdGrupo(grupo)
                         .build();
@@ -133,7 +136,7 @@ public class RegistroRepository implements IRegistroRepository {
                     .comNome(nome)
                     .comUsuario(usuario)
                     .comUrl(url)
-                    .comSenha(senha)
+                    .comSenha(descriptografar(senha))
                     .comComentario(comentario)
                     .comIdGrupo(grupo)
                     .build();
@@ -146,5 +149,23 @@ public class RegistroRepository implements IRegistroRepository {
         c.close();
 
         return listaRegistro;
+    }
+
+    @Override
+    public boolean deleta(long idRegistro) {
+
+        String sql = String.format("DELETE " +
+                        " FROM %s" +
+                        " WHERE %s = %s;",
+                TABELA_REGISTRO, REGISTRO_COLUMN_ID, idRegistro);
+
+        try {
+            set.execSQL(sql);
+            Log.d(LOG_PROTECT, "REGISTRO_REPOSITORY - Deletando geristro com o id " + idRegistro );
+        }catch (Exception e){
+            Log.e(LOG_PROTECT, "Erro ao Deletar grupo " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

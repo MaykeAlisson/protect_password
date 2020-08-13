@@ -11,12 +11,15 @@ import java.util.Date;
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
+import br.com.redesenhe.protectpassword.util.UtilCrypto;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_ID;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_SENHA;
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.UtilCrypto.descriptografar;
+import static br.com.redesenhe.protectpassword.util.UtilCrypto.encriptar;
 import static br.com.redesenhe.protectpassword.util.UtilDate.convertStringData;
 import static java.lang.String.format;
 
@@ -48,7 +51,7 @@ public class UsuarioRepository implements IUsuarioRepository {
 
         ContentValues cv = new ContentValues();
         cv.put(USUARIO_COLUMN_DEVICE, usuario.getDevice());
-        cv.put(USUARIO_COLUMN_SENHA, usuario.getSenha());
+        cv.put(USUARIO_COLUMN_SENHA, encriptar(usuario.getSenha()));
         cv.put(USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao().toString());
 
         try {
@@ -81,7 +84,7 @@ public class UsuarioRepository implements IUsuarioRepository {
             Usuario usuarioBuilder = new Usuario.Builder()
                     .comId(id)
                     .comDevice(device)
-                    .comSenha(senha)
+                    .comSenha(descriptografar(senha))
                     .comDataCriacao(dataCriacao)
                     .build();
 
@@ -126,32 +129,6 @@ public class UsuarioRepository implements IUsuarioRepository {
 //        }
 //
 //        return true;
-//    }
-
-//    @Override
-//    public List<Tarefa> listar() {
-//
-//        List<Tarefa> tarefas = new ArrayList<>();
-//
-//        String sql = "SELECT * FROM " + DbHelper.TABELA_TAREFAS + " ;";
-//        Cursor c = le.rawQuery(sql, null);
-//
-//        while ( c.moveToNext() ){
-//
-//            Tarefa tarefa = new Tarefa();
-//
-//            Long id = c.getLong( c.getColumnIndex("id") );
-//            String nomeTarefa = c.getString( c.getColumnIndex("nome") );
-//
-//            tarefa.setId( id );
-//            tarefa.setNomeTarefa( nomeTarefa );
-//
-//            tarefas.add( tarefa );
-//            Log.i("tarefaDao", tarefa.getNomeTarefa() );
-//        }
-//
-//        return tarefas;
-//
 //    }
 
 }

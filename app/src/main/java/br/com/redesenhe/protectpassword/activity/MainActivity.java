@@ -3,8 +3,12 @@ package br.com.redesenhe.protectpassword.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +23,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
 import br.com.redesenhe.protectpassword.repository.impl.UsuarioRepository;
+import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mostrarSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mostrarSenha.isChecked()){
+                if (mostrarSenha.isChecked()) {
                     inputSenha.setInputType(InputType.TYPE_CLASS_TEXT);
                     return;
                 }
@@ -72,18 +79,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-
-
-        // verifica se banco de dados existe se sim busca a senha
-        // se nao cria banco
-
         existeUsuario = usuarioRepository.existeUsuario();
-
         if (existeUsuario) {
             usuario = usuarioRepository.buscar();
         }
-//        solicitaPermisao();
-
     }
 
     private void solicitaPermisao() {
@@ -134,27 +133,24 @@ public class MainActivity extends AppCompatActivity {
         solicitaPermisao();
         try {
             DataBaseUtils.backupDataBase(this);
-//            String backupDBPath = Constantes.BACKUP_FOLDER + "/" + Constantes.DATABASE_NAME;
+
+//            String backupDBPath = Constantes.BACKUP_FOLDER + Constantes.DATABASE_NAME;
 //            File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
-////            Toast.makeText(MainActivity.this, "parece tudo certo ", Toast.LENGTH_LONG).show();
-        }catch (IOException e){
+
+//            Intent email = new Intent(android.content.Intent.ACTION_SEND);
+//            email.setType("application/octet-stream");
+//            email.putExtra(Intent.EXTRA_STREAM, Uri.parse(backupFile.getAbsolutePath()));
+//            email.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file:"+backupFile.getAbsolutePath()));
+//            startActivity(Intent.createChooser(email, "Enviar..."));
+
+        } catch (IOException e) {
             Log.d(LOG_PROTECT, e.getMessage());
             e.printStackTrace();
         }
-
-
     }
 
     public void entrar(View view) {
 
-        // se o arquivo existe e foi criado o map compara a senha de acesso;
-        // se o arquivo e novo salva a senha no map e grava no arquivo
-        // se senha correta ou gravada no map libera proxima tela
-
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
-
-/*
         if (TextUtils.isEmpty(inputSenha.getText())) {
             inputSenha.setError("Senha obrigatoria!");
             return;
@@ -174,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
                     .build();
 
             if (usuarioRepository.salvar(usuario)) {
-                Toast.makeText(MainActivity.this, "USUARIO SALVO", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
                 return;
             }
 
@@ -190,9 +187,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(MainActivity.this, "SENHA INVALIDA PARA USER: " + usuario.getDevice() , Toast.LENGTH_LONG).show();
-
- */
+        Toast.makeText(MainActivity.this, "SENHA INVALIDA PARA USER: " + usuario.getDevice(), Toast.LENGTH_LONG).show();
 
     }
 }
