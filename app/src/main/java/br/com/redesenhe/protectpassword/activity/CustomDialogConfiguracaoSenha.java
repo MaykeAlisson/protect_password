@@ -19,10 +19,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.util.UtilSenha;
 
-import static java.lang.Integer.getInteger;
-import static java.lang.Integer.numberOfLeadingZeros;
-import static java.lang.Long.parseLong;
-
 public class CustomDialogConfiguracaoSenha extends AppCompatDialogFragment {
 
     // Componentes

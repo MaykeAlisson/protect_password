@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_main_sobre"
+        android:title="Sobre"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        />
     <item
         android:id="@+id/menu_main_baseDados"
-        android:title="Base de Dados"
-        android:orderInCategory="100"
+        android:title="Enviar base de dados"
+        android:orderInCategory="200"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/menu_main_reset"
-        android:title="Resetar Arquivo"
-        android:orderInCategory="200"
+        android:id="@+id/menu_main_import_base"
+        android:title="Importar base de dados"
+        android:orderInCategory="300"
         app:showAsAction="never"
         />
 </menu>

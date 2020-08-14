@@ -3,7 +3,15 @@ package br.com.redesenhe.protectpassword.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.FileUtils;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import br.com.redesenhe.protectpassword.util.UtilSystem;
 
 import static br.com.redesenhe.protectpassword.util.Constantes.DATABASE_NAME;
 import static br.com.redesenhe.protectpassword.util.Constantes.DATA_BASE_VERSION;
@@ -11,6 +19,8 @@ import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 import static java.lang.String.format;
 
 public class DbHelper extends SQLiteOpenHelper {
+
+    String SYSTEM_DB_FOLDER = "//data//br.com.redesenhe.protectpassword//databases//";
 
     public static String TABELA_USUARIO = "usuario";
     public static String USUARIO_COLUMN_ID = "id";
@@ -93,6 +103,27 @@ public class DbHelper extends SQLiteOpenHelper {
             Log.d(LOG_PROTECT, "Erro ao atualizar App" + e.getMessage());
         }
 
+    }
+
+    /**
+     * Copies the database file at the specified location over the current
+     * internal application database.
+     * */
+    public boolean importDatabase(String dbPath) throws IOException {
+
+        // Close the SQLiteOpenHelper so it will commit the created empty
+        // database to internal storage.
+        close();
+        File newDb = new File(dbPath);
+        File oldDb = new File(SYSTEM_DB_FOLDER);
+        if (newDb.exists()) {
+            UtilSystem.copyFile(new FileInputStream(newDb), new FileOutputStream(oldDb));
+            // Access the copied database so SQLiteHelper will cache it and mark
+            // it as created.
+            getWritableDatabase().close();
+            return true;
+        }
+        return false;
     }
 
 }

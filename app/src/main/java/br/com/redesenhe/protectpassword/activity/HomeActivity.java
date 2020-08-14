@@ -1,12 +1,14 @@
 package br.com.redesenhe.protectpassword.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +32,13 @@ import java.util.List;
 import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.adapter.GrupoListAdapter;
 import br.com.redesenhe.protectpassword.model.Grupo;
-import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.IGrupoRepository;
 import br.com.redesenhe.protectpassword.repository.impl.GrupoRepository;
+import br.com.redesenhe.protectpassword.util.Constantes;
+import br.com.redesenhe.protectpassword.util.LoadingDialog;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
 
+import static br.com.redesenhe.protectpassword.util.Constantes.SHARED_PREFERENCES;
 import static java.lang.String.format;
 
 public class HomeActivity extends AppCompatActivity implements CustomDialogNovoGrupo.CustomDialogListener {
@@ -42,7 +46,12 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
     // Repository
     IGrupoRepository grupoRepository;
 
+    // Preferencias do Usuario
+    private SharedPreferences preferences;
+
     private List<Grupo> grupoList = new ArrayList<>();
+
+    final LoadingDialog loadingDialog = new LoadingDialog(HomeActivity.this);
 
     // Componentes
     private RecyclerView listViewDados;
@@ -56,6 +65,10 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
         setTitle("Home");
         setSupportActionBar(toolbar);
 
+        loadingDialog.startLoading();
+
+        preferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+
         // Repository
         grupoRepository = new GrupoRepository(getApplicationContext());
 
@@ -66,6 +79,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
         listViewDados = findViewById(R.id.activity_home_listView);
         bucaDados();
         configuraGrupoAdapter();
+        loadingDialog.dismissDialog();
     }
 
     private void configuraGrupoAdapter() {
@@ -149,10 +163,6 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_home_procurar:
-                Toast.makeText(HomeActivity.this, "Menu Pesquisa", Toast.LENGTH_LONG).show();
-                break;
-
             case R.id.menu_home_fechar:
                 Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -160,11 +170,50 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                 break;
 
             case R.id.menu_home_mudar_senha:
-                Toast.makeText(HomeActivity.this, "Menu Mudar Senha", Toast.LENGTH_LONG).show();
+                openMudarSenhaMaster();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openMudarSenhaMaster() {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_mudar_senha_master, null);
+        final EditText inputSenha = view.findViewById(R.id.layout_mudar_senha_senha);
+        final EditText inputConfimaSenha = view.findViewById(R.id.layout_mudar_senha_confirmaSenha);
+
+
+        final MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(this)
+//                .setHeaderColor(R.color.vermelhoSistema)
+                .setIcon(R.drawable.icone_key)
+                .setTitle(null)
+                .setCustomView(view, 20, 20, 20, 0)
+                .setNegative("Cancelar", null)
+                .setPositive("Salvar", new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                       if (inputSenha.getText().toString().trim().isEmpty()){
+                           Toast.makeText(getApplicationContext(), "Senha invalida!", Toast.LENGTH_LONG).show();
+                           return;
+                       }
+                       if (!inputSenha.getText().toString().equals(inputConfimaSenha.getText().toString())){
+                           Toast.makeText(getApplicationContext(), "Senhas diferentes!", Toast.LENGTH_LONG).show();
+                           return;
+                       }
+
+                        long aLong = preferences.getLong(Constantes.SHARED_PREFERENCES_ID_USER, 0);
+
+                        Toast.makeText(getApplicationContext(), "ID_USUARIO!" + aLong , Toast.LENGTH_LONG).show();
+
+
+
+
+//                        handleSalvarDebito(editTextDescricao, editTextValor, checkBoxRecorrente);
+                    }
+                })
+                .build();
+        dialog.show();
     }
 
     public void openDialog(View view) {

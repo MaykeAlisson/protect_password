@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_home_procurar"
-        android:title="Pesquisar"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_search_branco_24"
-        />
-    <item
         android:id="@+id/menu_home_fechar"
         android:title="Fechar"
         android:orderInCategory="200"

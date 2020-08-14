@@ -1,7 +1,9 @@
 package br.com.redesenhe.protectpassword.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -36,11 +39,18 @@ import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
+import static br.com.redesenhe.protectpassword.util.Constantes.SHARED_PREFERENCES;
+import static br.com.redesenhe.protectpassword.util.Constantes.SHARED_PREFERENCES_ID_USER;
+import static br.com.redesenhe.protectpassword.util.Constantes.VERSION;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private final int PERMISSAO_REQUEST = 1;
+
+    // Preferencias do Usuario
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     // Repository
     IUsuarioRepository usuarioRepository;
@@ -62,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
+
+        preferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        editor = preferences.edit();
 
         // Repository
         usuarioRepository = new UsuarioRepository(getApplicationContext());
@@ -121,16 +134,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.menu_main_sobre:
+                openDialogSobre();
+                break;
             case R.id.menu_main_baseDados:
                 realizaBackupBase();
                 break;
 
-            case R.id.menu_main_reset:
-                Toast.makeText(MainActivity.this, "Menu Resetar", Toast.LENGTH_LONG).show();
+            case R.id.menu_main_import_base:
+                importarBaseDeDados();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void importarBaseDeDados() {
+    }
+
+    private void openDialogSobre() {
+
+        final String textoSobre = String.format("Protect Password e um gerenciador de senha. \n\n " +
+                                                "Versão: %s \n " +
+                                                "Desenvolvido por: Redesenhe ", VERSION);
+
+        AlertDialog alerta;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sobre");
+        builder.setMessage(textoSobre);
+        alerta = builder.create();
+        alerta.show();
     }
 
     private void realizaBackupBase() {
@@ -176,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
             if (usuarioRepository.salvar(usuario)) {
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
+                editor.putLong(SHARED_PREFERENCES_ID_USER, usuarioRepository.buscar().getId());
+                editor.commit();
+                inputSenha.setText("");
                 return;
             }
 
@@ -184,14 +220,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String senha = usuario.getSenha();
+        editor.putLong(SHARED_PREFERENCES_ID_USER, usuario.getId());
+        editor.commit();
 
         if (senha.equals(senhaDigitada)) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
+            inputSenha.setText("");
             return;
         }
 
         Toast.makeText(MainActivity.this, "SENHA INVALIDA PARA USER: " + usuario.getDevice(), Toast.LENGTH_LONG).show();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        existeUsuario = usuarioRepository.existeUsuario();
+//        editor = preferences.edit();
     }
 }

@@ -2,6 +2,7 @@ package br.com.redesenhe.protectpassword.util;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.widget.Toast;
 
 import java.io.File;
@@ -54,6 +55,5 @@ public class DataBaseUtils {
         }
         return false;
     }
-
 
 }
