@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,9 @@ import br.com.redesenhe.protectpassword.R;
 import br.com.redesenhe.protectpassword.adapter.GrupoListAdapter;
 import br.com.redesenhe.protectpassword.model.Grupo;
 import br.com.redesenhe.protectpassword.repository.IGrupoRepository;
+import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
 import br.com.redesenhe.protectpassword.repository.impl.GrupoRepository;
+import br.com.redesenhe.protectpassword.repository.impl.UsuarioRepository;
 import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.LoadingDialog;
 import br.com.redesenhe.protectpassword.util.RecyclerItemClickListener;
@@ -45,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
     // Repository
     IGrupoRepository grupoRepository;
+    IUsuarioRepository usuarioRepository;
 
     // Preferencias do Usuario
     private SharedPreferences preferences;
@@ -71,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
         // Repository
         grupoRepository = new GrupoRepository(getApplicationContext());
+        usuarioRepository = new UsuarioRepository(getApplicationContext());
 
         init();
     }
@@ -185,7 +190,6 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
 
         final MaterialStyledDialog dialog = new MaterialStyledDialog.Builder(this)
-//                .setHeaderColor(R.color.vermelhoSistema)
                 .setIcon(R.drawable.icone_key)
                 .setTitle(null)
                 .setCustomView(view, 20, 20, 20, 0)
@@ -193,23 +197,19 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                 .setPositive("Salvar", new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                       if (inputSenha.getText().toString().trim().isEmpty()){
-                           Toast.makeText(getApplicationContext(), "Senha invalida!", Toast.LENGTH_LONG).show();
-                           return;
-                       }
-                       if (!inputSenha.getText().toString().equals(inputConfimaSenha.getText().toString())){
-                           Toast.makeText(getApplicationContext(), "Senhas diferentes!", Toast.LENGTH_LONG).show();
-                           return;
-                       }
+                        if (inputSenha.getText().toString().trim().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Senha invalida!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (!inputSenha.getText().toString().equals(inputConfimaSenha.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "Senhas diferentes!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
-                        long aLong = preferences.getLong(Constantes.SHARED_PREFERENCES_ID_USER, 0);
+                        long idUser = preferences.getLong(Constantes.SHARED_PREFERENCES_ID_USER, 0);
 
-                        Toast.makeText(getApplicationContext(), "ID_USUARIO!" + aLong , Toast.LENGTH_LONG).show();
-
-
-
-
-//                        handleSalvarDebito(editTextDescricao, editTextValor, checkBoxRecorrente);
+                        usuarioRepository.atualizar(idUser, inputSenha.getText().toString());
+                        
                     }
                 })
                 .build();
@@ -234,10 +234,10 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
         Grupo grupo = new Grupo.Builder()
                 .comNome(possivelNomeGrupo)
-                .comDataCriacao(new Date())
+                .comDataCriacao(new SimpleDateFormat("dd-MM-yyyy").format(new Date()))
                 .build();
 
-        if (grupoRepository.salvar(grupo)){
+        if (grupoRepository.salvar(grupo)) {
             bucaDados();
             configuraGrupoAdapter();
             return;

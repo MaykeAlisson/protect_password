@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Registro implements Serializable {
 
@@ -16,7 +14,7 @@ public class Registro implements Serializable {
     private String senha;
     private String comentario;
     private Long idGrupo;
-    private Date dataCriacao;
+    private String dataCriacao;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -34,7 +32,7 @@ public class Registro implements Serializable {
             @JsonProperty("senha") final String senha,
             @JsonProperty("comentario") final String comentario,
             @JsonProperty("idGrupo") final Long idGrupo,
-            @JsonProperty("dataCriacao") final Date dataCriacao
+            @JsonProperty("dataCriacao") final String dataCriacao
     ) {
         this.id = id;
         this.nome = nome;
@@ -99,7 +97,7 @@ public class Registro implements Serializable {
     }
 
     @JsonProperty("dataCriacao")
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
@@ -118,7 +116,7 @@ public class Registro implements Serializable {
         private String senha;
         private String comentario;
         private Long idGrupo;
-        private Date dataCriacao;
+        private String dataCriacao;
 
         public Builder() {
         }
@@ -158,7 +156,7 @@ public class Registro implements Serializable {
             return this;
         }
 
-        public Builder comDataCriacao(final Date value) {
+        public Builder comDataCriacao(final String value) {
             this.dataCriacao = value;
             return this;
         }

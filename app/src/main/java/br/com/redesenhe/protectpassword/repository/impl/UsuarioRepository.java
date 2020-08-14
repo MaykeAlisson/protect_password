@@ -11,7 +11,6 @@ import java.util.Date;
 import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
-import br.com.redesenhe.protectpassword.util.UtilCrypto;
 
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_CRIACAO;
 import static br.com.redesenhe.protectpassword.helper.DbHelper.USUARIO_COLUMN_DEVICE;
@@ -52,7 +51,7 @@ public class UsuarioRepository implements IUsuarioRepository {
         ContentValues cv = new ContentValues();
         cv.put(USUARIO_COLUMN_DEVICE, usuario.getDevice());
         cv.put(USUARIO_COLUMN_SENHA, encriptar(usuario.getSenha()));
-        cv.put(USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao().toString());
+        cv.put(USUARIO_COLUMN_CRIACAO, usuario.getDataCriacao());
 
         try {
             set.insert(DbHelper.TABELA_USUARIO, null, cv);
@@ -79,7 +78,7 @@ public class UsuarioRepository implements IUsuarioRepository {
             Long id = c.getLong(c.getColumnIndex(USUARIO_COLUMN_ID));
             String device = c.getString(c.getColumnIndex(USUARIO_COLUMN_DEVICE));
             String senha = c.getString(c.getColumnIndex(USUARIO_COLUMN_SENHA));
-            Date dataCriacao = convertStringData(c.getString(c.getColumnIndex(USUARIO_COLUMN_CRIACAO)));
+            String dataCriacao = c.getString(c.getColumnIndex(USUARIO_COLUMN_CRIACAO));
 
             Usuario usuarioBuilder = new Usuario.Builder()
                     .comId(id)
@@ -98,23 +97,23 @@ public class UsuarioRepository implements IUsuarioRepository {
         return usuario;
     }
 
-//    @Override
-//    public boolean atualizar(Usuario usuario) {
-//
-//        ContentValues cv = new ContentValues();
-//        cv.put("nome", tarefa.getNomeTarefa() );
-//
-//        try {
-//            String[] args = {tarefa.getId().toString()};
-//            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args );
-//            Log.i(LOG_PROTECT, "Tarefa atualizada com sucesso!");
-//        }catch (Exception e){
-//            Log.e(LOG_PROTECT, "Erro ao atualizada tarefa " + e.getMessage() );
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    @Override
+    public boolean atualizar(Long idUser, String novaSenha) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(USUARIO_COLUMN_SENHA, encriptar(novaSenha) );
+
+        try {
+            String[] args = {idUser.toString()};
+            set.update(DbHelper.TABELA_USUARIO, cv, "id=?", args );
+            Log.i(LOG_PROTECT, "Senha atualizada com sucesso!");
+        }catch (Exception e){
+            Log.e(LOG_PROTECT, "Erro ao atualizada Senha " + e.getMessage() );
+            return false;
+        }
+
+        return true;
+    }
 
 //    @Override
 //    public boolean deletar(Tarefa tarefa) {

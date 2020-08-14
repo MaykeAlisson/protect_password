@@ -36,7 +36,7 @@ public class GrupoRepository implements IGrupoRepository {
     public boolean salvar(Grupo grupo){
         ContentValues cv = new ContentValues();
         cv.put(GRUPO_COLUMN_NOME, grupo.getNome());
-        cv.put(GRUPO_COLUMN_CRIACAO, grupo.getDataCriacao().toString());
+        cv.put(GRUPO_COLUMN_CRIACAO, grupo.getDataCriacao());
 
         try {
             set.insert(TABELA_GRUPO, null, cv);

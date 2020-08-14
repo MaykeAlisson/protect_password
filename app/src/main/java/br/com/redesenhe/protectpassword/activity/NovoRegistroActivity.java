@@ -1,13 +1,14 @@
 package br.com.redesenhe.protectpassword.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.redesenhe.protectpassword.R;
@@ -15,7 +16,7 @@ import br.com.redesenhe.protectpassword.model.Registro;
 import br.com.redesenhe.protectpassword.repository.IRegistroRepository;
 import br.com.redesenhe.protectpassword.repository.impl.RegistroRepository;
 
-public class NovoRegistroActivity extends AppCompatActivity implements CustomDialogConfiguracaoSenha.CustomDialogListener{
+public class NovoRegistroActivity extends AppCompatActivity implements CustomDialogConfiguracaoSenha.CustomDialogListener {
 
     // Repository
     IRegistroRepository registroRepository;
@@ -57,12 +58,12 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         inputComentario = findViewById(R.id.activity_novo_registro_comentario);
     }
 
-    public void openDialog(View view){
+    public void openDialog(View view) {
         CustomDialogConfiguracaoSenha customDialogConfiguracaoSenha = new CustomDialogConfiguracaoSenha();
         customDialogConfiguracaoSenha.show(getSupportFragmentManager(), "Gerar Senha");
     }
 
-    public void onClickCancelar(View view){
+    public void onClickCancelar(View view) {
         finish();
     }
 
@@ -82,14 +83,14 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
 
     }
 
-    private boolean validaCampos(){
+    private boolean validaCampos() {
 
-        if (inputNome.getText().toString().trim().isEmpty()){
+        if (inputNome.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Nome obrigatorio!", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (inputSenha.getText().toString().trim().isEmpty()){
+        if (inputSenha.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Senha obrigatoria!", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -97,7 +98,7 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         String senha = inputSenha.getText().toString();
         String confirmaSenha = inputConfirmaSenha.getText().toString();
 
-        if (!senha.equals(confirmaSenha)){
+        if (!senha.equals(confirmaSenha)) {
             inputSenha.setError("Senhas diferentes");
             inputConfirmaSenha.setError("Senhas diferentes");
             Toast.makeText(this, "Senhas diferentes!", Toast.LENGTH_LONG).show();
@@ -108,7 +109,7 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
 
     }
 
-    public void cadastroNovoRegistro(View view){
+    public void cadastroNovoRegistro(View view) {
 
         if (!validaCampos()) return;
 
@@ -119,10 +120,10 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
                 .comSenha(inputSenha.getText().toString())
                 .comComentario(inputComentario.getText().toString())
                 .comIdGrupo(idGrupo)
-                .comDataCriacao(new Date())
+                .comDataCriacao(new SimpleDateFormat("dd-MM-yyyy").format(new Date()))
                 .build();
 
-        if (registroRepository.salvar(registro)){
+        if (registroRepository.salvar(registro)) {
             finish();
             return;
         }

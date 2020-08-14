@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.redesenhe.protectpassword.R;
@@ -151,6 +152,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importarBaseDeDados() {
+        solicitaPermisao();
+
+        try {
+           if( DataBaseUtils.importaDataBase(this)){
+               Toast.makeText(MainActivity.this, "Base de dados importada!", Toast.LENGTH_LONG).show();
+               return;
+           }
+            Toast.makeText(MainActivity.this, "Não foi possivel importar dados!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(MainActivity.this, "Erro ao importar Base!", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 
@@ -200,12 +213,11 @@ public class MainActivity extends AppCompatActivity {
         if (!existeUsuario) {
 
             String modelo = Build.MODEL;
-            Date data = new Date();
 
             usuario = new Usuario.Builder()
                     .comDevice(modelo)
                     .comSenha(senhaDigitada)
-                    .comDataCriacao(data)
+                    .comDataCriacao(new SimpleDateFormat("dd-MM-yyyy").format(new Date()))
                     .build();
 
             if (usuarioRepository.salvar(usuario)) {

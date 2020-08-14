@@ -8,4 +8,6 @@ public interface IUsuarioRepository {
     boolean salvar(Usuario usuario);
 
     Usuario buscar();
+
+    boolean atualizar(Long idUser, String novaSenha);
 }
