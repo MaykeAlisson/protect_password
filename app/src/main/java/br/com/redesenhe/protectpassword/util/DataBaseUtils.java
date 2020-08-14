@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import br.com.redesenhe.protectpassword.helper.DbHelper;
+
 import static br.com.redesenhe.protectpassword.util.Constantes.BACKUP_FOLDER;
 import static br.com.redesenhe.protectpassword.util.Constantes.DATABASE_NAME;
 
@@ -53,6 +55,26 @@ public class DataBaseUtils {
                 return true;
             }
         }
+        return false;
+    }
+
+    public static boolean importaDataBase(Context context) throws IOException {
+        DbHelper db = new DbHelper(context);
+
+        File sd = Environment.getExternalStorageDirectory();
+
+        if (sd.canWrite()) {
+
+            File backupFolder = new File(sd, BACKUP_FOLDER);
+
+            if (!backupFolder.exists()){
+                backupFolder.mkdirs();
+            }
+
+            return db.importDatabase(BACKUP_FOLDER);
+
+        }
+
         return false;
     }
 

@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import br.com.redesenhe.protectpassword.R;
+import br.com.redesenhe.protectpassword.helper.DbHelper;
 import br.com.redesenhe.protectpassword.model.Usuario;
 import br.com.redesenhe.protectpassword.repository.IUsuarioRepository;
 import br.com.redesenhe.protectpassword.repository.impl.UsuarioRepository;
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importarBaseDeDados() {
+
     }
 
     private void openDialogSobre() {
