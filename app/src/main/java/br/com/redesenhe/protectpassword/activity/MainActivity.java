@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
@@ -134,14 +138,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             DataBaseUtils.backupDataBase(this);
 
-//            String backupDBPath = Constantes.BACKUP_FOLDER + Constantes.DATABASE_NAME;
-//            File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
+            String backupDBPath = Constantes.BACKUP_FOLDER + Constantes.DATABASE_NAME;
+            File backupFile = new File(Environment.getExternalStorageDirectory(), backupDBPath);
 
-//            Intent email = new Intent(android.content.Intent.ACTION_SEND);
-//            email.setType("application/octet-stream");
-//            email.putExtra(Intent.EXTRA_STREAM, Uri.parse(backupFile.getAbsolutePath()));
-//            email.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file:"+backupFile.getAbsolutePath()));
-//            startActivity(Intent.createChooser(email, "Enviar..."));
+            Intent email = new Intent(android.content.Intent.ACTION_SEND);
+            email.setType("application/octet-stream");
+            email.putExtra(Intent.EXTRA_STREAM, Uri.parse(backupFile.getAbsolutePath()));
+            email.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file:"+backupFile.getAbsolutePath()));
+            startActivity(Intent.createChooser(email, "Enviar..."));
 
         } catch (IOException e) {
             Log.d(LOG_PROTECT, e.getMessage());
