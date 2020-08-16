@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -70,6 +71,14 @@ public class RegistroActivity extends AppCompatActivity {
         textCriacao = findViewById(R.id.activity_registro_criacao);
         textCriacao.setFocusable(false);
         btnEditar = findViewById(R.id.activity_registro_btnEditar);
+        btnEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NovoRegistroActivity.class);
+                intent.putExtra("idRegistro", idRegistro);
+                startActivity(intent);
+            }
+        });
 
         buscaRegistro();
     }

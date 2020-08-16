@@ -31,6 +31,7 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
 
     // Put Extra
     private Long idGrupo;
+    private Long idRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         registroRepository = new RegistroRepository(getApplicationContext());
 
         this.idGrupo = getIntent().getExtras().getLong("idGrupo");
+        this.idRegistro = getIntent().getLongExtra("idRegistro", 0);
 
         init();
     }
@@ -56,6 +58,18 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         inputSenha = findViewById(R.id.activity_novo_registro_senha);
         inputConfirmaSenha = findViewById(R.id.activity_novo_registro_confirmaSenha);
         inputComentario = findViewById(R.id.activity_novo_registro_comentario);
+
+        if (idRegistro != 0)  buscaRegistro(idRegistro);
+    }
+
+    private void buscaRegistro(final Long idRegistro) {
+        Registro registro = registroRepository.buscaPorId(idRegistro);
+        inputNome.setText(registro.getNome() == null ? "" : registro.getNome());
+        inputUsuario.setText(registro.getUsuario() == null ? "" : registro.getUsuario());
+        inputUrl.setText(registro.getUrl() == null ? "" : registro.getUrl());
+        inputSenha.setText(registro.getSenha() == null ? "" : registro.getSenha());
+        inputConfirmaSenha.setText(registro.getSenha() == null ? "" : registro.getSenha());
+        inputComentario.setText(registro.getComentario() == null ? "" : registro.getComentario());
     }
 
     public void openDialog(View view) {
