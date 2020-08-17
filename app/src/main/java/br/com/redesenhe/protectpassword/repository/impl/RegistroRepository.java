@@ -165,4 +165,28 @@ public class RegistroRepository implements IRegistroRepository {
         }
         return true;
     }
+
+    @Override
+    public boolean update(Registro registro){
+
+        ContentValues cv = new ContentValues();
+        cv.put(REGISTRO_COLUMN_NOME, registro.getNome());
+        cv.put(REGISTRO_COLUMN_USUARIO, registro.getUsuario());
+        cv.put(REGISTRO_COLUMN_URL, registro.getUrl());
+        cv.put(REGISTRO_COLUMN_SENHA, encriptar(registro.getSenha()));
+        cv.put(REGISTRO_COLUMN_COMENTARIO, registro.getComentario());
+        cv.put(REGISTRO_COLUMN_ID_GRUPO, registro.getIdGrupo());
+        cv.put(REGISTRO_COLUMN_CRIACAO, registro.getDataCriacao());
+
+        try {
+            String[] args = {registro.getId().toString()};
+            set.update(TABELA_REGISTRO, cv, "id=?", args );
+            Log.i(LOG_PROTECT, "Registro atualizada com sucesso!");
+        }catch (Exception e){
+            Log.e(LOG_PROTECT, "Erro ao atualizada Registro " + e.getMessage() );
+            return false;
+        }
+
+        return true;
+    }
 }

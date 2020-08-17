@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -77,6 +80,7 @@ public class RegistroActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), NovoRegistroActivity.class);
                 intent.putExtra("idRegistro", idRegistro);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -95,7 +99,7 @@ public class RegistroActivity extends AppCompatActivity {
         textUrl.setText(registro.getUrl() != null ? registro.getUrl() : "");
         textSenha.setText(registro.getSenha() != null ? registro.getSenha() : "");
         textComentario.setText(registro.getComentario() != null ? registro.getComentario() : "");
-        textCriacao.setText(registro.getDataCriacao() != null ? registro.getDataCriacao().toString() : "");
+        textCriacao.setText(registro.getDataCriacao() != null ? registro.getDataCriacao() : "");
     }
 
     @Override
@@ -119,11 +123,17 @@ public class RegistroActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_registro_copiar_usuario:
-                Toast.makeText(RegistroActivity.this, "Menu Copiar Usuario", Toast.LENGTH_LONG).show();
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Usuario", textUsuario.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(RegistroActivity.this, "Usuario copiado", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.menu_registro_copiar_senha:
-                Toast.makeText(RegistroActivity.this, "Menu Copiar Senha", Toast.LENGTH_LONG).show();
+                ClipboardManager clipboard2 = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip2 = ClipData.newPlainText("Senha", textSenha.getText().toString());
+                clipboard2.setPrimaryClip(clip2);
+                Toast.makeText(RegistroActivity.this, "Senha copiada", Toast.LENGTH_LONG).show();
                 break;
         }
 

@@ -12,4 +12,6 @@ public interface IRegistroRepository {
     List<Registro> buscaTodosPorIdGrupo(Long idGrupo);
 
     boolean deleta(long idRegistro);
+
+    boolean update(Registro registro);
 }

@@ -63,6 +63,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Usuario"
+        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/activity_registro_nome"
@@ -115,6 +116,7 @@
         android:ems="10"
         android:inputType="textPersonName|textPassword"
         android:text="Senha"
+        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/activity_registro_url" />

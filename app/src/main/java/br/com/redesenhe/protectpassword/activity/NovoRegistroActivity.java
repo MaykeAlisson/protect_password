@@ -33,6 +33,9 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
     private Long idGrupo;
     private Long idRegistro;
 
+    private Long id;
+    private String dataCriacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         inputConfirmaSenha = findViewById(R.id.activity_novo_registro_confirmaSenha);
         inputComentario = findViewById(R.id.activity_novo_registro_comentario);
 
-        if (idRegistro != 0)  buscaRegistro(idRegistro);
+        if (idRegistro != 0) buscaRegistro(idRegistro);
     }
 
     private void buscaRegistro(final Long idRegistro) {
@@ -70,6 +73,11 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         inputSenha.setText(registro.getSenha() == null ? "" : registro.getSenha());
         inputConfirmaSenha.setText(registro.getSenha() == null ? "" : registro.getSenha());
         inputComentario.setText(registro.getComentario() == null ? "" : registro.getComentario());
+
+        id = registro.getId();
+        idGrupo = registro.getIdGrupo();
+        dataCriacao = registro.getDataCriacao();
+
     }
 
     public void openDialog(View view) {
@@ -127,6 +135,16 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
 
         if (!validaCampos()) return;
 
+        if (idRegistro != 0) {
+            if(atualizaRegistro()){
+                Toast.makeText(this, "Registro atualizado!", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+            Toast.makeText(this, "Erro ao atualizar Registro!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Registro registro = new Registro.Builder()
                 .comNome(inputNome.getText().toString())
                 .comUsuario(inputUsuario.getText().toString())
@@ -143,5 +161,22 @@ public class NovoRegistroActivity extends AppCompatActivity implements CustomDia
         }
 
         Toast.makeText(this, "Erro ao Salvar Registro!", Toast.LENGTH_LONG).show();
+    }
+
+    private boolean atualizaRegistro() {
+
+        Registro registro = new Registro.Builder()
+                .comId(id)
+                .comNome(inputNome.getText().toString())
+                .comUsuario(inputUsuario.getText().toString())
+                .comUrl(inputUrl.getText().toString())
+                .comSenha(inputSenha.getText().toString())
+                .comComentario(inputComentario.getText().toString())
+                .comIdGrupo(idGrupo)
+                .comDataCriacao(dataCriacao)
+                .build();
+
+        return registroRepository.update(registro);
+
     }
 }
