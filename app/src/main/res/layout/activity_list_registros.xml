@@ -31,7 +31,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_list_registro_listView"
+        android:foregroundGravity="right|bottom"
         app:srcCompat="@drawable/ic_add_branco_24"
         tools:ignore="VectorDrawableCompat" />
 
