@@ -83,11 +83,11 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
     private void init() {
         listViewDados = findViewById(R.id.activity_home_listView);
         bucaDados();
-        configuraGrupoAdapter();
+        configuraListViewGrupo();
         loadingDialog.dismissDialog();
     }
 
-    private void configuraGrupoAdapter() {
+    private void configuraListViewGrupo() {
         // config adapter
         GrupoListAdapter adapter = new GrupoListAdapter(grupoList);
 
@@ -98,6 +98,10 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
         listViewDados.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         listViewDados.setAdapter(adapter);
 
+        configuraOnClickListView();
+    }
+
+    private void configuraOnClickListView() {
         // evento click
         listViewDados.addOnItemTouchListener(
                 new RecyclerItemClickListener(
@@ -131,6 +135,19 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
         );
     }
 
+    private void recarregaListViewGrupo(){
+        // config adapter
+        GrupoListAdapter adapter = new GrupoListAdapter(grupoList);
+
+        // config recyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        listViewDados.setLayoutManager(layoutManager);
+        listViewDados.setHasFixedSize(true);
+        listViewDados.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        listViewDados.setAdapter(adapter);
+    }
+
+
     private void exibeDialogDeletaGrupo(String nome, final long idGrupo) {
 
         View view = LayoutInflater.from(this).inflate(R.layout.insere_texto_alerta, null);
@@ -148,7 +165,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         grupoRepository.deleta(idGrupo);
                         bucaDados();
-                        configuraGrupoAdapter();
+                        recarregaListViewGrupo();
                     }
                 }).build();
         dialog.show();
@@ -239,7 +256,7 @@ public class HomeActivity extends AppCompatActivity implements CustomDialogNovoG
 
         if (grupoRepository.salvar(grupo)) {
             bucaDados();
-            configuraGrupoAdapter();
+            recarregaListViewGrupo();
             return;
         }
 
