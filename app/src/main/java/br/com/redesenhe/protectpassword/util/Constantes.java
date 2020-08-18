@@ -3,7 +3,7 @@ package br.com.redesenhe.protectpassword.util;
 public interface Constantes {
 
     String LOG_PROTECT = "preotect_log";
-    String VERSION = "1.0.0";
+    String VERSION = "1.0.1";
     String SYSTEM_FOLDER = "//protectpassword";
     String BACKUP_FOLDER = SYSTEM_FOLDER + "//backup//";
     String DATABASE_NAME =  "protectpassword.db";
