@@ -41,7 +41,7 @@ public class GrupoListAdapter extends  RecyclerView.Adapter<GrupoListAdapter.MyV
         Grupo grupo = listaGrupo.get(position);
         holder.imgViewIconeMundo.setImageResource(R.drawable.icone_mundo);
         holder.txtViewNome.setText(grupo.getNome());
-        holder.imgViewIconeKey.setImageResource(R.drawable.icone_key);
+        holder.imgViewIconeKey.setImageResource(R.drawable.icone_pasta);
     }
 
     @Override
