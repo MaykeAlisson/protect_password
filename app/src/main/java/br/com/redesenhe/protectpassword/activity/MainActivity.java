@@ -2,6 +2,7 @@ package br.com.redesenhe.protectpassword.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ import br.com.redesenhe.protectpassword.repository.impl.UsuarioRepository;
 import br.com.redesenhe.protectpassword.util.Constantes;
 import br.com.redesenhe.protectpassword.util.DataBaseUtils;
 
+import static br.com.redesenhe.protectpassword.util.Constantes.BACKUP_FOLDER;
 import static br.com.redesenhe.protectpassword.util.Constantes.LOG_PROTECT;
 import static br.com.redesenhe.protectpassword.util.Constantes.SHARED_PREFERENCES;
 import static br.com.redesenhe.protectpassword.util.Constantes.SHARED_PREFERENCES_ID_USER;
@@ -144,11 +146,34 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_main_import_base:
-                importarBaseDeDados();
+                openDialogImportarBase();
+//                importarBaseDeDados();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openDialogImportarBase() {
+        solicitaPermisao();
+
+        final String caminhoArquivo = String.format("Para importar a base coloque o arquivo .db na pasta. \n \n" +
+                " \\protectpassword\\backup \n \n" +
+                "Desenvolvido por: Redesenhe - %s", VERSION);
+
+        AlertDialog alerta;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Importar Base de Dados.");
+        builder.setMessage(caminhoArquivo);
+        builder.setPositiveButton("Importar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                importarBaseDeDados();
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
+
     }
 
     private void importarBaseDeDados() {

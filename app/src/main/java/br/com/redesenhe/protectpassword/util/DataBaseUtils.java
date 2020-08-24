@@ -58,6 +58,24 @@ public class DataBaseUtils {
         return false;
     }
 
+    public static boolean criaPastaImport(){
+
+        File sd = Environment.getExternalStorageDirectory();
+
+        if (sd.canWrite()) {
+
+            File backupFolder = new File(sd, BACKUP_FOLDER);
+
+            if (!backupFolder.exists()) {
+               return backupFolder.mkdirs();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public static boolean importaDataBase(Context context) throws IOException {
         DbHelper db = new DbHelper(context);
 
